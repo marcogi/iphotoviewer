@@ -7,7 +7,6 @@ iPhotoViewer::iPhotoViewer(QWidget *parent)
 {
 	ui.setupUi(this);
 	connect(ui.pushButton, SIGNAL(pressed()), this, SLOT(pushButtonPressed()));
-	connect(ui.lstPhotos, SIGNAL(itemSelectionChanged()), this, SLOT(lstSelectionChanged()));
 }
 
 iPhotoViewer::~iPhotoViewer()
@@ -17,9 +16,9 @@ iPhotoViewer::~iPhotoViewer()
 
 void iPhotoViewer::lstSelectionChanged()
 {
-	//QMessageBox::information( 0, "Info",ui.lstPhotos->currentItem()->text());
-	//QPixmap *image = new QPixmap(ui.lstPhotos->currentItem()->text());
-	ui.label->setPixmap(QPixmap(ui.lstPhotos->currentItem()->text()));
+	PhotoModel *l=(PhotoModel*)ui.lstPhotos->model();
+	Photo p=l->get(ui.lstPhotos->currentIndex());
+	ui.label->setPixmap(QPixmap(p.getThumbPath()));
 }
 
 void iPhotoViewer::pushButtonPressed()
@@ -41,6 +40,7 @@ void iPhotoViewer::pushButtonPressed()
 	}
 	file.close();
 
+	PhotoModel *listOfPhotos=new PhotoModel();
 	QDomElement pathRoot = doc.documentElement();
 
 	if(pathRoot.tagName() == "plist")
@@ -85,8 +85,11 @@ void iPhotoViewer::pushButtonPressed()
 
 					while(!imgNode.isNull())
 					{
-						QString id=imgNode.toElement().text();
-						//cout << id.toStdString() << endl;
+						Photo photo;//=new IPhotoPhotos();
+
+						int id=imgNode.toElement().text().toInt();
+						photo.setId(id);
+						//cout << id << endl;
 
 						imgNode = imgNode.nextSibling();
 						QDomNode img2Node = imgNode.firstChild();
@@ -101,11 +104,51 @@ void iPhotoViewer::pushButtonPressed()
 								QString path = img2Node.toElement().text();
 								//QMessageBox::information( 0, "Info", "ID "+id+" Path "+path);
 								path=path.replace(originalPath,libraryPath);
-								ui.lstPhotos->addItem(path);
+								//ui.lstPhotos->addItem(path);
+								photo.setThumbPath(path);
+							}
+							else if(img2Node.toElement().tagName()=="key" && img2Node.toElement().text()=="ImagePath")
+							{
+								img2Node = img2Node.nextSibling();
+								QString path = img2Node.toElement().text();
+								path=path.replace(originalPath,libraryPath);
+								photo.setImagePath(path);
+							}
+							else if(img2Node.toElement().tagName()=="key" && img2Node.toElement().text()=="MediaType")
+							{
+								img2Node = img2Node.nextSibling();
+								QString mediaType = img2Node.toElement().text();
+								photo.setMediaType(mediaType);
+							}
+							else if(img2Node.toElement().tagName()=="key" && img2Node.toElement().text()=="Caption")
+							{
+								img2Node = img2Node.nextSibling();
+								QString caption = img2Node.toElement().text();
+								photo.setCaption(caption);
+							}
+							else if(img2Node.toElement().tagName()=="key" && img2Node.toElement().text()=="Comment")
+							{
+								img2Node = img2Node.nextSibling();
+								QString comment = img2Node.toElement().text();
+								photo.setComment(comment);
+							}
+							else if(img2Node.toElement().tagName()=="key" && img2Node.toElement().text()=="Roll")
+							{
+								img2Node = img2Node.nextSibling();
+								int roll = img2Node.toElement().text().toInt();
+								photo.setRoll(roll);
+							}
+							else if(img2Node.toElement().tagName()=="key" && img2Node.toElement().text()=="Rating")
+							{
+								img2Node = img2Node.nextSibling();
+								int rating = img2Node.toElement().text().toInt();
+								photo.setRating(rating);
 							}
 
 							img2Node = img2Node.nextSibling();
 						}
+
+						listOfPhotos->append(photo);
 
 						imgNode = imgNode.nextSibling();
 					}
@@ -116,4 +159,7 @@ void iPhotoViewer::pushButtonPressed()
 		}
 	}
 
+
+	ui.lstPhotos->setModel(listOfPhotos);
+	connect(ui.lstPhotos->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstSelectionChanged()));
 }

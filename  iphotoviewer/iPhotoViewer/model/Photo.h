@@ -5,17 +5,18 @@
  *      Author: david
  */
 
-#ifndef IPHOTOPHOTOS_H_
-#define IPHOTOPHOTOS_H_
+#ifndef PHOTO_H_
+#define PHOTO_H_
 
-#include <qdom.h>
-#include <qfile.h>
+//#include <QDom>
+#include <QFile>
+#include <QMetaType>
 
-class IPhotoPhotos {
+class Photo {
 public:
-	IPhotoPhotos(int id,QString imagePath,QString thumbPath,QString caption,QString mediaType,QString comment,int roll,int rating);
-	IPhotoPhotos();
-	virtual ~IPhotoPhotos();
+	Photo(int id,QString imagePath,QString thumbPath,QString caption,QString mediaType,QString comment,int roll,int rating);
+	Photo();
+	virtual ~Photo();
 
 	QString getThumbPath();
 	QString getImagePath();
@@ -45,5 +46,6 @@ private:
 	int rating;
 
 };
+Q_DECLARE_METATYPE(Photo)
 
-#endif /* IPHOTOPHOTOS_H_ */
+#endif /* PHOTO_H_ */

@@ -27,16 +27,6 @@
      <string>Fill</string>
     </property>
    </widget>
-   <widget class="QListWidget" name="lstPhotos">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>251</width>
-      <height>501</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
@@ -48,6 +38,26 @@
     </property>
     <property name="text">
      <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QListView" name="lstPhotos">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>251</width>
+      <height>241</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QListView" name="lstAlbums">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>260</y>
+      <width>251</width>
+      <height>251</height>
+     </rect>
     </property>
    </widget>
   </widget>
