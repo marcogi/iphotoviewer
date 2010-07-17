@@ -26,19 +26,46 @@ void iPhotoViewer::pushButtonPressed()
 {
 	//ui.lstPhotos->addItem("Item");
 	//IPhotoPhotos *ipp=new IPhotoPhotos();
+	QString originalPath;
+	QString libraryPath="/home/david/Dropbox/iPhoto Library";
 	QDomDocument doc( "AdBookML" );
-	QFile file( "/home/david/Dropbox/iPhoto Library/AlbumData.xml" );
+	QFile file( libraryPath + "/AlbumData.xml");
 	if( !file.open( QIODevice::ReadOnly ) ){
 		QMessageBox::information( 0, "Info", "IOReadonly" );
 		return ;}
 	if( !doc.setContent( &file ) )
 	{
-	  file.close();
-	  QMessageBox::information( 0, "Info", "setContent" );
-	  return ;
+		file.close();
+		QMessageBox::information( 0, "Info", "setContent" );
+		return ;
 	}
 	file.close();
 
+	QDomElement pathRoot = doc.documentElement();
+
+	if(pathRoot.tagName() == "plist")
+	{
+		QDomNode pathNode = pathRoot.firstChild();
+		if(pathNode.toElement().tagName() == "dict")
+		{
+			QDomNode innerNode2 = pathNode.firstChild();
+
+			while(!innerNode2.isNull())
+			{
+				if(innerNode2.toElement().tagName()=="key" && innerNode2.toElement().text()=="Archive Path")
+				{
+					innerNode2 = innerNode2.nextSibling();
+					originalPath = innerNode2.toElement().text();
+					cout << "Original Path: " << originalPath.toStdString() << endl;
+					break;
+				}
+
+				innerNode2 = innerNode2.nextSibling();
+			}
+
+
+		}
+	}
 
 	QDomElement root = doc.documentElement();
 
@@ -59,7 +86,7 @@ void iPhotoViewer::pushButtonPressed()
 					while(!imgNode.isNull())
 					{
 						QString id=imgNode.toElement().text();
-						cout << id.toStdString() << endl;
+						//cout << id.toStdString() << endl;
 
 						imgNode = imgNode.nextSibling();
 						QDomNode img2Node = imgNode.firstChild();
@@ -73,7 +100,7 @@ void iPhotoViewer::pushButtonPressed()
 								img2Node = img2Node.nextSibling();
 								QString path = img2Node.toElement().text();
 								//QMessageBox::information( 0, "Info", "ID "+id+" Path "+path);
-								path=path.replace("/Users/vanessakorfkamp/Dropbox/iPhoto Library","/home/david/Dropbox/iPhoto Library");
+								path=path.replace(originalPath,libraryPath);
 								ui.lstPhotos->addItem(path);
 							}
 
