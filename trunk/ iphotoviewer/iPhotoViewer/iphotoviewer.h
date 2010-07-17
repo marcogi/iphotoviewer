@@ -8,6 +8,9 @@
 #include <QFile>
 #include <QMessageBox>
 
+#include "model/Photo.h"
+#include "model/PhotoModel.h"
+
 class iPhotoViewer : public QMainWindow
 {
     Q_OBJECT

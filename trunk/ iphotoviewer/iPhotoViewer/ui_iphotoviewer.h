@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'iphotoviewer.ui'
 **
-** Created: Wed Jul 14 22:45:51 2010
+** Created: Sat Jul 17 23:35:54 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -16,7 +16,7 @@
 #include <QtGui/QButtonGroup>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
-#include <QtGui/QListWidget>
+#include <QtGui/QListView>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
@@ -31,8 +31,9 @@ class Ui_iPhotoViewerClass
 public:
     QWidget *centralwidget;
     QPushButton *pushButton;
-    QListWidget *lstPhotos;
     QLabel *label;
+    QListView *lstPhotos;
+    QListView *lstAlbums;
     QMenuBar *menubar;
     QMenu *menuIPhotoViewer;
     QStatusBar *statusbar;
@@ -47,12 +48,15 @@ public:
         pushButton = new QPushButton(centralwidget);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
         pushButton->setGeometry(QRect(10, 520, 251, 27));
-        lstPhotos = new QListWidget(centralwidget);
-        lstPhotos->setObjectName(QString::fromUtf8("lstPhotos"));
-        lstPhotos->setGeometry(QRect(10, 10, 251, 501));
         label = new QLabel(centralwidget);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(270, 10, 521, 531));
+        lstPhotos = new QListView(centralwidget);
+        lstPhotos->setObjectName(QString::fromUtf8("lstPhotos"));
+        lstPhotos->setGeometry(QRect(10, 10, 251, 241));
+        lstAlbums = new QListView(centralwidget);
+        lstAlbums->setObjectName(QString::fromUtf8("lstAlbums"));
+        lstAlbums->setGeometry(QRect(10, 260, 251, 251));
         iPhotoViewerClass->setCentralWidget(centralwidget);
         menubar = new QMenuBar(iPhotoViewerClass);
         menubar->setObjectName(QString::fromUtf8("menubar"));
