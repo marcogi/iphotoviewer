@@ -34,6 +34,19 @@ void iPhotoViewer::lstAlbumSelectionChanged()
 	//ui.label->setPixmap(QPixmap(p->getThumbPath()));
 }
 
+void iPhotoViewer::lstRollSelectionChanged()
+{
+	BaseList *l=(BaseList*)ui.lstRolls->model();
+	Roll *r=(Roll*)l->get(ui.lstRolls->currentIndex());
+	BaseList *l2=r->getPhotos();
+	//cout << "Rows: " << l2->rowCount() << endl;
+
+	ui.lstPhotosInAlbum->setModel(l2);
+	//cout << "Changed Model" << endl;
+	connect(ui.lstPhotosInAlbum->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstSelectionChanged()));
+	//ui.label->setPixmap(QPixmap(p->getThumbPath()));
+}
+
 void iPhotoViewer::pushButtonPressed()
 {
 	//ui.lstPhotos->addItem("Item");
@@ -55,6 +68,7 @@ void iPhotoViewer::pushButtonPressed()
 
 	BaseList *listOfPhotos=new BaseList();
 	BaseList *listOfAlbums=new BaseList();
+	BaseList *listOfRolls=new BaseList();
 	QDomElement pathRoot = doc.documentElement();
 
 	if(pathRoot.tagName() == "plist")
@@ -250,8 +264,96 @@ void iPhotoViewer::pushButtonPressed()
 		}
 	}
 
+	QDomElement rollRoot = doc.documentElement();
+
+	if(rollRoot.tagName() == "plist")
+	{
+		QDomNode node = rollRoot.firstChild();
+		if(node.toElement().tagName() == "dict")
+		{
+			QDomNode innerNode = node.firstChild();
+
+			while(!innerNode.isNull())
+			{
+				if(innerNode.toElement().tagName()=="key" && innerNode.toElement().text()=="List of Rolls")
+				{
+					innerNode = innerNode.nextSibling();
+					QDomNode imgNode = innerNode.firstChild();
+
+					while(!imgNode.isNull())
+					{
+						Roll *roll = new Roll();//=new IPhotoPhotos();
+
+						//int id=imgNode.toElement().text().toInt();
+						//photo.setId(id);
+						//cout << id << endl;
+
+						imgNode = imgNode.nextSibling();
+						QDomNode img2Node = imgNode.firstChild();
+						//img2Node = img2Node.firstChild();
+
+						while(!img2Node.isNull())
+						{
+							//cout << img2Node.toElement().tagName().toStdString() << "---" << img2Node.toElement().text().toStdString() << endl;
+
+							if(img2Node.toElement().tagName()=="key" && img2Node.toElement().text()=="RollId")
+							{
+								img2Node = img2Node.nextSibling();
+								int id = img2Node.toElement().text().toInt();
+
+								roll->setId(id);
+							}
+							else if(img2Node.toElement().tagName()=="key" && img2Node.toElement().text()=="RollName")
+							{
+								img2Node = img2Node.nextSibling();
+								QString rollName = img2Node.toElement().text();
+
+								roll->setRollName(rollName);
+							}
+							else if(img2Node.toElement().tagName()=="key" && img2Node.toElement().text()=="KeyPhotoKey")
+							{
+								img2Node = img2Node.nextSibling();
+								int keyPhotoKey = img2Node.toElement().text().toInt();
+
+								Photo *p=(Photo*)listOfPhotos->get(keyPhotoKey);
+
+								roll->setKeyPhoto(p);
+							}
+							else if(img2Node.toElement().tagName()=="key" && img2Node.toElement().text()=="KeyList")
+							{
+								img2Node = img2Node.nextSibling();
+								QDomNode img3Node=img2Node.firstChild();
+								//BaseList *albumList=new BaseList();
+
+								while(!img3Node.isNull())
+								{
+									int photoKey=img3Node.toElement().text().toInt();
+									Photo *p=(Photo*)listOfPhotos->get(photoKey);
+									roll->getPhotos()->append(p);
+									img3Node=img3Node.nextSibling();
+								}
+
+								//album->setList(albumList);
+							}
+
+							img2Node = img2Node.nextSibling();
+						}
+
+						listOfRolls->append(roll);
+
+						imgNode = imgNode.nextSibling();
+					}
+				}
+
+				innerNode = innerNode.nextSibling();
+			}
+		}
+	}
+
 	ui.lstPhotos->setModel(listOfPhotos);
 	//connect(ui.lstPhotos->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstSelectionChanged()));
 	ui.lstAlbums->setModel(listOfAlbums);
+	ui.lstRolls->setModel(listOfRolls);
 	connect(ui.lstAlbums->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstAlbumSelectionChanged()));
+	connect(ui.lstRolls->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstRollSelectionChanged()));
 }

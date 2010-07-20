@@ -3,12 +3,14 @@ TARGET = iPhotoViewer
 QT += core \
     gui \
     xml
-HEADERS += model/BaseModel.h \
+HEADERS += model/Roll.h \
+    model/BaseModel.h \
     model/BaseList.h \
     model/Album.h \
     model/Photo.h \
     iphotoviewer.h
-SOURCES += model/BaseModel.cpp \
+SOURCES += model/Roll.cpp \
+    model/BaseModel.cpp \
     model/BaseList.cpp \
     model/Album.cpp \
     model/Photo.cpp \

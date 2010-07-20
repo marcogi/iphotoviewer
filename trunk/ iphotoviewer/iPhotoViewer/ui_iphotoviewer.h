@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'iphotoviewer.ui'
 **
-** Created: Tue Jul 20 19:10:09 2010
+** Created: Tue Jul 20 22:25:57 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -35,6 +35,7 @@ public:
     QListView *lstPhotos;
     QListView *lstAlbums;
     QListView *lstPhotosInAlbum;
+    QListView *lstRolls;
     QMenuBar *menubar;
     QMenu *menuIPhotoViewer;
     QStatusBar *statusbar;
@@ -57,10 +58,13 @@ public:
         lstPhotos->setGeometry(QRect(10, 10, 251, 91));
         lstAlbums = new QListView(centralwidget);
         lstAlbums->setObjectName(QString::fromUtf8("lstAlbums"));
-        lstAlbums->setGeometry(QRect(10, 110, 251, 251));
+        lstAlbums->setGeometry(QRect(10, 110, 251, 101));
         lstPhotosInAlbum = new QListView(centralwidget);
         lstPhotosInAlbum->setObjectName(QString::fromUtf8("lstPhotosInAlbum"));
         lstPhotosInAlbum->setGeometry(QRect(10, 370, 251, 141));
+        lstRolls = new QListView(centralwidget);
+        lstRolls->setObjectName(QString::fromUtf8("lstRolls"));
+        lstRolls->setGeometry(QRect(10, 220, 251, 141));
         iPhotoViewerClass->setCentralWidget(centralwidget);
         menubar = new QMenuBar(iPhotoViewerClass);
         menubar->setObjectName(QString::fromUtf8("menubar"));

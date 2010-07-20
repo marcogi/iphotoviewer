@@ -8,7 +8,6 @@
 #include "Photo.h"
 
 Photo::Photo() {
-	this->id2=0;
 	this->imagePath="";
 	this->thumbPath="";
 	this->caption="";
@@ -16,18 +15,6 @@ Photo::Photo() {
 	this->comment="";
 	this->roll=0;
 	this->rating=0;
-}
-
-Photo::Photo(int id,QString imagePath,QString thumbPath,QString caption,QString mediaType,QString comment,int roll,int rating)
-{
-	this->id2=id;
-	this->imagePath=imagePath;
-	this->thumbPath=thumbPath;
-	this->caption=caption;
-	this->mediaType=mediaType;
-	this->comment=comment;
-	this->roll=roll;
-	this->rating=rating;
 }
 
 Photo::~Photo() {
@@ -42,11 +29,6 @@ QString Photo::getCaption()
 QString Photo::getComment()
 {
 	return comment;
-}
-
-int Photo::getId2()
-{
-	return id2;
 }
 
 QString Photo::getImagePath()
@@ -82,11 +64,6 @@ void Photo::setCaption(QString value)
 void Photo::setComment(QString value)
 {
 	comment=value;
-}
-
-void Photo::setId2(int value)
-{
-	id2=value;
 }
 
 void Photo::setImagePath(QString value)
