@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'iphotoviewer.h'
 **
-** Created: Sat Jul 17 23:40:18 2010
+** Created: Tue Jul 20 19:10:21 2010
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_iPhotoViewer[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -33,13 +33,14 @@ static const uint qt_meta_data_iPhotoViewer[] = {
  // slots: signature, parameters, type, tag, flags
       14,   13,   13,   13, 0x0a,
       34,   13,   13,   13, 0x0a,
+      56,   13,   13,   13, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_iPhotoViewer[] = {
     "iPhotoViewer\0\0pushButtonPressed()\0"
-    "lstSelectionChanged()\0"
+    "lstSelectionChanged()\0lstAlbumSelectionChanged()\0"
 };
 
 const QMetaObject iPhotoViewer::staticMetaObject = {
@@ -73,9 +74,10 @@ int iPhotoViewer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         switch (_id) {
         case 0: pushButtonPressed(); break;
         case 1: lstSelectionChanged(); break;
+        case 2: lstAlbumSelectionChanged(); break;
         default: ;
         }
-        _id -= 2;
+        _id -= 3;
     }
     return _id;
 }

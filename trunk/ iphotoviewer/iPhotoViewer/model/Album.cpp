@@ -8,22 +8,23 @@
 #include "Album.h"
 
 Album::Album() {
-	this->id=0;
+	this->id2=0;
 	this->albumName="";
+	this->list=new BaseList();
 }
 
 Album::~Album() {
 	// TODO Auto-generated destructor stub
 }
 
-/*PhotoModel Album::getList()
+BaseList* Album::getList()
 {
 	return list;
-}*/
+}
 
-int Album::getId()
+int Album::getId2()
 {
-	return id;
+	return id2;
 }
 
 QString Album::getAlbumName()
@@ -31,17 +32,22 @@ QString Album::getAlbumName()
 	return albumName;
 }
 
-/*void Album::setList(PhotoModel value)
+void Album::setList(BaseList *value)
 {
 	list=value;
-}*/
+}
 
-void Album::setId(int value)
+void Album::setId2(int value)
 {
-	id=value;
+	id2=value;
 }
 
 void Album::setAlbumName(QString value)
 {
 	albumName=value;
+}
+
+QString Album::getDisplayString()
+{
+	return this->getAlbumName();
 }

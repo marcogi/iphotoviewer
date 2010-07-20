@@ -8,8 +8,9 @@
 #include <QFile>
 #include <QMessageBox>
 
+#include "model/BaseList.h"
 #include "model/Photo.h"
-#include "model/PhotoModel.h"
+#include "model/Album.h"
 
 class iPhotoViewer : public QMainWindow
 {
@@ -25,6 +26,7 @@ private:
 public slots:
 	void pushButtonPressed();
 	void lstSelectionChanged();
+	void lstAlbumSelectionChanged();
 };
 
 #endif // IPHOTOVIEWER_H
