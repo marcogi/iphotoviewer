@@ -1,22 +1,26 @@
 /*
- * IPhotoPhotosList.h
+ * BaseModel.h
  *
- *  Created on: 17.07.2010
+ *  Created on: 18.07.2010
  *      Author: david
  */
 
-#ifndef PHOTOMODEL_H_
-#define PHOTOMODEL_H_
+#ifndef BASELIST_H_
+#define BASELIST_H_
 
+#include <iostream>
 #include <QAbstractListModel>
 #include <QObject>
+#include <QVariant>
+#include <QHash>
 #include <QList>
-#include "model/Photo.h"
+#include "BaseModel.h"
+#include "Photo.h"
 
-class PhotoModel : public QAbstractListModel {
+class BaseList : public QAbstractListModel {
 public:
-	PhotoModel();
-	virtual ~PhotoModel();
+	BaseList();
+	virtual ~BaseList();
 
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;
 	QVariant data(const QModelIndex &index, int role) const;
@@ -27,11 +31,13 @@ public:
 	bool insertRows(int position, int rows, const QModelIndex &index = QModelIndex());
 	bool removeRows(int position, int rows, const QModelIndex &index = QModelIndex());
 
-	void append(Photo photo);
-	Photo get(QModelIndex index);
+	void append(BaseModel* model);
+	BaseModel* get(QModelIndex index);
+	BaseModel* get(int key);
 private:
-	QList<Photo> list;
+	QHash<int,int> list2;
+	QList<BaseModel*> list;
 
 };
 
-#endif /* PHOTOMODEL_H_ */
+#endif /* BASELIST_H_ */

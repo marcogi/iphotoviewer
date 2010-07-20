@@ -11,8 +11,9 @@
 //#include <QDom>
 #include <QFile>
 #include <QMetaType>
+#include <model/BaseModel.h>
 
-class Photo {
+class Photo : public BaseModel {
 public:
 	Photo(int id,QString imagePath,QString thumbPath,QString caption,QString mediaType,QString comment,int roll,int rating);
 	Photo();
@@ -20,7 +21,7 @@ public:
 
 	QString getThumbPath();
 	QString getImagePath();
-	int getId();
+	int getId2();
 	QString getMediaType();
 	QString getCaption();
 	QString getComment();
@@ -29,16 +30,18 @@ public:
 
 	void setThumbPath(QString value);
 	void setImagePath(QString value);
-	void setId(int value);
+	void setId2(int value);
 	void setMediaType(QString value);
 	void setCaption(QString value);
 	void setComment(QString value);
 	void setRoll(int value);
 	void setRating(int value);
+
+	QString getDisplayString();
 private:
 	QString thumbPath;
 	QString imagePath;
-	int id;
+	int id2;
 	QString mediaType;
 	QString caption;
 	QString comment;

@@ -1,22 +1,23 @@
 /*
- * IPhotoPhotosList.cpp
+ * BaseModel.cpp
  *
- *  Created on: 17.07.2010
+ *  Created on: 18.07.2010
  *      Author: david
  */
 
-#include "PhotoModel.h"
+#include "BaseList.h"
 
-PhotoModel::PhotoModel() {
+BaseList::BaseList() {
 	// TODO Auto-generated constructor stub
-
+	//list=new QList<BaseModel*>();
+	//idMap=new QMap<int,int>();
 }
 
-PhotoModel::~PhotoModel() {
+BaseList::~BaseList() {
 	// TODO Auto-generated destructor stub
 }
 
-QVariant PhotoModel::data(const QModelIndex &index, int role) const {
+QVariant BaseList::data(const QModelIndex &index, int role) const {
 	if (!index.isValid())
 		return QVariant();
 
@@ -25,26 +26,26 @@ QVariant PhotoModel::data(const QModelIndex &index, int role) const {
 
 	if (role == Qt::DisplayRole)
 	{
-		Photo photo=list.at(index.row());
-		return photo.getCaption();
+		BaseModel *model=list.at(index.row());
+		return model->getDisplayString();
 	}
 	else if(role == Qt::UserRole)
 	{
-		Photo photo=list.at(index.row());
+		BaseModel *model=list.at(index.row());
 		QVariant qv;
-		qv.setValue(photo);
-		return qv;//.getThumbPath();
+		qv.setValue(model);
+		return qv;
 	}
 	else
 		return QVariant();
 }
 
-int PhotoModel::rowCount(const QModelIndex &parent) const {
+int BaseList::rowCount(const QModelIndex &parent) const {
 	parent.isValid();
 	return list.count();
 }
 
-QVariant PhotoModel::headerData(int section, Qt::Orientation orientation,
+QVariant BaseList::headerData(int section, Qt::Orientation orientation,
 		int role) const {
 	if (role != Qt::DisplayRole)
 		return QVariant();
@@ -60,7 +61,7 @@ QVariant PhotoModel::headerData(int section, Qt::Orientation orientation,
  enabled, selectable, and editable.
  */
 
-Qt::ItemFlags PhotoModel::flags(const QModelIndex &index) const {
+Qt::ItemFlags BaseList::flags(const QModelIndex &index) const {
 	if (!index.isValid())
 		return Qt::ItemIsEnabled;
 
@@ -78,11 +79,11 @@ Qt::ItemFlags PhotoModel::flags(const QModelIndex &index) const {
  The dataChanged() signal is emitted if the item is changed.
  */
 
-bool PhotoModel::setData(const QModelIndex &index, const QVariant &value,
+bool BaseList::setData(const QModelIndex &index, const QVariant &value,
 		int role) {
 	if (index.isValid() && role == Qt::EditRole) {
 
-		list.replace(index.row(), value.value<Photo>());
+		list.replace(index.row(), value.value<BaseModel*>());
 		emit dataChanged(index, index);
 		return true;
 	}
@@ -94,13 +95,13 @@ bool PhotoModel::setData(const QModelIndex &index, const QVariant &value,
  Inserts a number of rows into the model at the specified position.
  */
 
-bool PhotoModel::insertRows(int position, int rows,
+bool BaseList::insertRows(int position, int rows,
 		const QModelIndex &parent) {
 	beginInsertRows(QModelIndex(), position, position + rows - 1);
 
 	for (int row = 0; row < rows; ++row) {
-		Photo photo;
-		list.insert(position, photo);
+		BaseModel *model;
+		list.insert(position, model);
 	}
 
 	endInsertRows();
@@ -112,7 +113,7 @@ bool PhotoModel::insertRows(int position, int rows,
  Removes a number of rows from the model at the specified position.
  */
 
-bool PhotoModel::removeRows(int position, int rows,
+bool BaseList::removeRows(int position, int rows,
 		const QModelIndex &parent) {
 	beginRemoveRows(QModelIndex(), position, position + rows - 1);
 
@@ -125,19 +126,32 @@ bool PhotoModel::removeRows(int position, int rows,
 
 }
 
-void PhotoModel::append(Photo photo)
+void BaseList::append(BaseModel *model)
 {
 	int row=this->rowCount(QModelIndex());
 	this->insertRow(row,QModelIndex());
 	QModelIndex index = this->index(row, 0, QModelIndex());
 
 	QVariant qv;
-	qv.setValue(photo);
+	qv.setValue(model);
 	this->setData(index, qv);
+
+	// we store the index mapped to a key, for fast access to objects, referenced by their id.
+	//std::cout << model->getId() << "---" << index.row() << std::endl;
+	int id=model->getId();
+	int idx=index.row();
+	list2.insert(id,idx);
 }
 
-Photo PhotoModel::get(QModelIndex index)
+BaseModel* BaseList::get(QModelIndex index)
 {
 	QVariant qv=this->data(index,Qt::UserRole);
-	return qv.value<Photo>();
+	return qv.value<BaseModel*>();
+}
+
+BaseModel* BaseList::get(int key)
+{
+	int index=list2.value(key);
+	Photo *p=(Photo*)list.at(index);
+	return p;
 }

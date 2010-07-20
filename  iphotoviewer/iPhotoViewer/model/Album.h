@@ -9,24 +9,28 @@
 #define ALBUM_H_
 
 #include <QObject>
-//#include <model/PhotoModel.h>
+#include <QMetaType>
+#include <model/BaseModel.h>
+#include <model/BaseList.h>
 
-class Album {
+class Album : public BaseModel {
 public:
 	Album();
 	virtual ~Album();
 
-	int getId();
+	int getId2();
 	QString getAlbumName();
-	//PhotoModel getList();
+	BaseList* getList();
 
-	void setId(int value);
+	void setId2(int value);
 	void setAlbumName(QString value);
-	//void setList(PhotoModel value);
+	void setList(BaseList *value);
+	QString getDisplayString();
 private:
-	int id;
+	int id2;
 	QString albumName;
-	//PhotoModel list;
+	BaseList *list;
 };
+Q_DECLARE_METATYPE(Album)
 
 #endif /* ALBUM_H_ */
