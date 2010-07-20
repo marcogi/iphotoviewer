@@ -356,4 +356,6 @@ void iPhotoViewer::pushButtonPressed()
 	ui.lstRolls->setModel(listOfRolls);
 	connect(ui.lstAlbums->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstAlbumSelectionChanged()));
 	connect(ui.lstRolls->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstRollSelectionChanged()));
+
+	PhotoPanel pp;
 }
