@@ -8,7 +8,6 @@
 #include "Album.h"
 
 Album::Album() {
-	this->id2=0;
 	this->albumName="";
 	this->list=new BaseList();
 }
@@ -22,11 +21,6 @@ BaseList* Album::getList()
 	return list;
 }
 
-int Album::getId2()
-{
-	return id2;
-}
-
 QString Album::getAlbumName()
 {
 	return albumName;
@@ -35,11 +29,6 @@ QString Album::getAlbumName()
 void Album::setList(BaseList *value)
 {
 	list=value;
-}
-
-void Album::setId2(int value)
-{
-	id2=value;
 }
 
 void Album::setAlbumName(QString value)

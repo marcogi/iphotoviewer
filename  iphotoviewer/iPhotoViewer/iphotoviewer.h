@@ -11,6 +11,7 @@
 #include "model/BaseList.h"
 #include "model/Photo.h"
 #include "model/Album.h"
+#include "model/Roll.h"
 
 class iPhotoViewer : public QMainWindow
 {
@@ -27,6 +28,7 @@ public slots:
 	void pushButtonPressed();
 	void lstSelectionChanged();
 	void lstAlbumSelectionChanged();
+	void lstRollSelectionChanged();
 };
 
 #endif // IPHOTOVIEWER_H
