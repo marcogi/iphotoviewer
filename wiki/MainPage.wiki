@@ -1,0 +1,13 @@
+#summary Notes for testing the project in its current state.
+
+= Introduction =
+
+By now the path to your iPhoto libary is hard-coded in iphotoviewer.cpp. When trying the
+current source, please adapt this path to your local path or create a symlink
+
+
+= Details =
+
+I develop this project in Eclipse and checked everything project-related in, also the .project and .cproject files.
+
+To compile you need QT 4.x and of course a C++ compiler + standard libraries. Enjoy.
