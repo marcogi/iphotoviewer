@@ -31,9 +31,9 @@
     <property name="geometry">
      <rect>
       <x>270</x>
-      <y>10</y>
+      <y>250</y>
       <width>521</width>
-      <height>531</height>
+      <height>291</height>
      </rect>
     </property>
     <property name="text">
@@ -78,6 +78,22 @@
       <width>251</width>
       <height>141</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>10</y>
+      <width>521</width>
+      <height>531</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
     </property>
    </widget>
   </widget>

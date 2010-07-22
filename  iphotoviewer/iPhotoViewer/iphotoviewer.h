@@ -23,6 +23,7 @@ public:
     ~iPhotoViewer();
 
 private:
+    PhotoPanel *pp;
     Ui::iPhotoViewerClass ui;
 
 public slots:

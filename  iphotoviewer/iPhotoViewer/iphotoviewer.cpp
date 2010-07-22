@@ -7,6 +7,12 @@ iPhotoViewer::iPhotoViewer(QWidget *parent)
 {
 	ui.setupUi(this);
 	connect(ui.pushButton, SIGNAL(pressed()), this, SLOT(pushButtonPressed()));
+
+	pp=new PhotoPanel();
+	QVBoxLayout *layout = new QVBoxLayout;
+	layout->setContentsMargins(0,0,0,0);
+	layout->addWidget(pp);
+	ui.frame->setLayout(layout);
 }
 
 iPhotoViewer::~iPhotoViewer()
@@ -32,6 +38,8 @@ void iPhotoViewer::lstAlbumSelectionChanged()
 	cout << "Changed Model" << endl;
 	connect(ui.lstPhotosInAlbum->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstSelectionChanged()));
 	//ui.label->setPixmap(QPixmap(p->getThumbPath()));
+
+	pp->setModel(l2,100);
 }
 
 void iPhotoViewer::lstRollSelectionChanged()
@@ -45,6 +53,7 @@ void iPhotoViewer::lstRollSelectionChanged()
 	//cout << "Changed Model" << endl;
 	connect(ui.lstPhotosInAlbum->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstSelectionChanged()));
 	//ui.label->setPixmap(QPixmap(p->getThumbPath()));
+	pp->setModel(l2,100);
 }
 
 void iPhotoViewer::pushButtonPressed()
@@ -357,5 +366,4 @@ void iPhotoViewer::pushButtonPressed()
 	connect(ui.lstAlbums->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstAlbumSelectionChanged()));
 	connect(ui.lstRolls->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstRollSelectionChanged()));
 
-	PhotoPanel pp;
 }

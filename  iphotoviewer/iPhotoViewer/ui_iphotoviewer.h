@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'iphotoviewer.ui'
 **
-** Created: Tue Jul 20 22:25:57 2010
+** Created: Thu Jul 22 23:26:52 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -14,6 +14,7 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QFrame>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QListView>
@@ -36,6 +37,7 @@ public:
     QListView *lstAlbums;
     QListView *lstPhotosInAlbum;
     QListView *lstRolls;
+    QFrame *frame;
     QMenuBar *menubar;
     QMenu *menuIPhotoViewer;
     QStatusBar *statusbar;
@@ -52,7 +54,7 @@ public:
         pushButton->setGeometry(QRect(10, 520, 251, 27));
         label = new QLabel(centralwidget);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(270, 10, 521, 531));
+        label->setGeometry(QRect(270, 250, 521, 291));
         lstPhotos = new QListView(centralwidget);
         lstPhotos->setObjectName(QString::fromUtf8("lstPhotos"));
         lstPhotos->setGeometry(QRect(10, 10, 251, 91));
@@ -65,6 +67,11 @@ public:
         lstRolls = new QListView(centralwidget);
         lstRolls->setObjectName(QString::fromUtf8("lstRolls"));
         lstRolls->setGeometry(QRect(10, 220, 251, 141));
+        frame = new QFrame(centralwidget);
+        frame->setObjectName(QString::fromUtf8("frame"));
+        frame->setGeometry(QRect(270, 10, 521, 531));
+        frame->setFrameShape(QFrame::StyledPanel);
+        frame->setFrameShadow(QFrame::Raised);
         iPhotoViewerClass->setCentralWidget(centralwidget);
         menubar = new QMenuBar(iPhotoViewerClass);
         menubar->setObjectName(QString::fromUtf8("menubar"));
