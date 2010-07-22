@@ -3,7 +3,8 @@
 
 #include <QLabel>
 #include <QModelIndex>
-#include <QVBoxLayout>
+#include <QGridLayout>
+#include <cmath>
 #include "model/Photo.h"
 #include <QtGui/QWidget>
 #include "ui_photopanel.h"
