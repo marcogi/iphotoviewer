@@ -2,7 +2,7 @@
 
 = Introduction =
 
-By now the path to your iPhoto libary is hard-coded in iphotoviewer.cpp. When trying the
+By now the path to your iPhoto library is hard-coded in iphotoviewer.cpp. When trying the
 current source, please adapt this path to your local path or create a symlink
 
 
