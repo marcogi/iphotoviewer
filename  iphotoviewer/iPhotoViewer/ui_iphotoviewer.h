@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'iphotoviewer.ui'
 **
-** Created: Thu Jul 22 23:26:52 2010
+** Created: Fri Jul 23 19:56:11 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -14,14 +14,13 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
-#include <QtGui/QFrame>
 #include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
 #include <QtGui/QListView>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
 #include <QtGui/QPushButton>
+#include <QtGui/QScrollArea>
 #include <QtGui/QStatusBar>
 #include <QtGui/QWidget>
 
@@ -32,12 +31,12 @@ class Ui_iPhotoViewerClass
 public:
     QWidget *centralwidget;
     QPushButton *pushButton;
-    QLabel *label;
     QListView *lstPhotos;
     QListView *lstAlbums;
     QListView *lstPhotosInAlbum;
     QListView *lstRolls;
-    QFrame *frame;
+    QScrollArea *scrollArea;
+    QWidget *scrollAreaWidgetContents;
     QMenuBar *menubar;
     QMenu *menuIPhotoViewer;
     QStatusBar *statusbar;
@@ -52,9 +51,6 @@ public:
         pushButton = new QPushButton(centralwidget);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
         pushButton->setGeometry(QRect(10, 520, 251, 27));
-        label = new QLabel(centralwidget);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(270, 250, 521, 291));
         lstPhotos = new QListView(centralwidget);
         lstPhotos->setObjectName(QString::fromUtf8("lstPhotos"));
         lstPhotos->setGeometry(QRect(10, 10, 251, 91));
@@ -67,11 +63,19 @@ public:
         lstRolls = new QListView(centralwidget);
         lstRolls->setObjectName(QString::fromUtf8("lstRolls"));
         lstRolls->setGeometry(QRect(10, 220, 251, 141));
-        frame = new QFrame(centralwidget);
-        frame->setObjectName(QString::fromUtf8("frame"));
-        frame->setGeometry(QRect(270, 10, 521, 531));
-        frame->setFrameShape(QFrame::StyledPanel);
-        frame->setFrameShadow(QFrame::Raised);
+        scrollArea = new QScrollArea(centralwidget);
+        scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
+        scrollArea->setGeometry(QRect(270, 10, 521, 531));
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(scrollArea->sizePolicy().hasHeightForWidth());
+        scrollArea->setSizePolicy(sizePolicy);
+        scrollArea->setWidgetResizable(true);
+        scrollAreaWidgetContents = new QWidget();
+        scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 519, 529));
+        scrollArea->setWidget(scrollAreaWidgetContents);
         iPhotoViewerClass->setCentralWidget(centralwidget);
         menubar = new QMenuBar(iPhotoViewerClass);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -94,7 +98,6 @@ public:
     {
         iPhotoViewerClass->setWindowTitle(QString());
         pushButton->setText(QApplication::translate("iPhotoViewerClass", "Fill", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("iPhotoViewerClass", "TextLabel", 0, QApplication::UnicodeUTF8));
         menuIPhotoViewer->setTitle(QApplication::translate("iPhotoViewerClass", "Datei", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

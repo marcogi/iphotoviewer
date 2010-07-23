@@ -14,7 +14,10 @@ PhotoPanel::~PhotoPanel()
 void PhotoPanel::setModel(BaseList *list,int width)
 {
 	int panelWidth=this->width();
-	int labelsPerRow = panelWidth/width;
+	//this->setGeometry(0,0,this->parentWidget()->width(),this->parentWidget()->height());
+
+
+	int labelsPerRow = floor(panelWidth/(width+10));
 
 	int rows = ceil((float)list->rowCount() / (float)labelsPerRow);
 
@@ -42,8 +45,22 @@ void PhotoPanel::setModel(BaseList *list,int width)
 				Photo *p=(Photo*)list->get(idx);
 				QPixmap *pm=new QPixmap(p->getThumbPath());
 
-				lb->setPixmap(pm->scaled(width,width));
-				//lb->setFixedWidth(width);
+				int w=pm->width();
+				int h=pm->height();
+
+				if(w>h)
+				{
+					h=h*width/w;
+					w=width;
+				}
+				else
+				{
+					w=w*width/h;
+					h=width;
+				}
+				lb->setPixmap(pm->scaled(w,h));
+				lb->setFixedHeight(width);
+				lb->setFixedWidth(width);
 				//lb->setGeometry(j*(width+10),i*(width+10),width,width);
 
 				grid->addWidget(lb,i,j);

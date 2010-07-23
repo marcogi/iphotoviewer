@@ -9,10 +9,11 @@ iPhotoViewer::iPhotoViewer(QWidget *parent)
 	connect(ui.pushButton, SIGNAL(pressed()), this, SLOT(pushButtonPressed()));
 
 	pp=new PhotoPanel();
-	QVBoxLayout *layout = new QVBoxLayout;
-	layout->setContentsMargins(0,0,0,0);
-	layout->addWidget(pp);
-	ui.frame->setLayout(layout);
+	//QVBoxLayout *layout = new QVBoxLayout;
+	//layout->setContentsMargins(0,0,0,0);
+	//layout->addWidget(pp);
+	ui.scrollArea->setWidget(pp);
+	//ui.scrollArea->setLayout(layout);
 }
 
 iPhotoViewer::~iPhotoViewer()
@@ -22,9 +23,9 @@ iPhotoViewer::~iPhotoViewer()
 
 void iPhotoViewer::lstSelectionChanged()
 {
-	BaseList *l=(BaseList*)ui.lstPhotosInAlbum->model();
-	Photo *p=(Photo*)l->get(ui.lstPhotosInAlbum->currentIndex());
-	ui.label->setPixmap(QPixmap(p->getThumbPath()));
+	//BaseList *l=(BaseList*)ui.lstPhotosInAlbum->model();
+	//Photo *p=(Photo*)l->get(ui.lstPhotosInAlbum->currentIndex());
+	//ui.label->setPixmap(QPixmap(p->getThumbPath()));
 }
 
 void iPhotoViewer::lstAlbumSelectionChanged()
