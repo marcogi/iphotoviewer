@@ -40,7 +40,7 @@ void iPhotoViewer::lstAlbumSelectionChanged()
 	connect(ui.lstPhotosInAlbum->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstSelectionChanged()));
 	//ui.label->setPixmap(QPixmap(p->getThumbPath()));
 
-	pp->setModel(l2,100);
+	pp->setModel(l2,200);
 }
 
 void iPhotoViewer::lstRollSelectionChanged()
