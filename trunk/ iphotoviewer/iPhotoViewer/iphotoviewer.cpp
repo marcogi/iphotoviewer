@@ -8,7 +8,7 @@ iPhotoViewer::iPhotoViewer(QWidget *parent)
 	ui.setupUi(this);
 	connect(ui.pushButton, SIGNAL(pressed()), this, SLOT(pushButtonPressed()));
 
-	pp=new PhotoPanel();
+	pp=new PhotoPanel(ui.scrollArea);
 	//QVBoxLayout *layout = new QVBoxLayout;
 	//layout->setContentsMargins(0,0,0,0);
 	//layout->addWidget(pp);

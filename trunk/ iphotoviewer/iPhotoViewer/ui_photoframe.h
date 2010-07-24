@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'photoframe.ui'
 **
-** Created: Sat Jul 24 02:09:37 2010
+** Created: Sat Jul 24 10:39:34 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -26,6 +26,7 @@ public:
     QLabel *photoWidget;
     QLabel *defaultBorder;
     QLabel *selectedBorder;
+    QLabel *caption;
 
     void setupUi(QWidget *PhotoFrameClass)
     {
@@ -69,6 +70,22 @@ public:
 "color: #000000; \n"
 "selection-background-color:#000000; \n"
 "}"));
+        caption = new QLabel(PhotoFrameClass);
+        caption->setObjectName(QString::fromUtf8("caption"));
+        caption->setGeometry(QRect(170, 240, 52, 13));
+        QPalette palette;
+        QBrush brush(QColor(221, 221, 221, 255));
+        brush.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Active, QPalette::WindowText, brush);
+        palette.setBrush(QPalette::Inactive, QPalette::WindowText, brush);
+        QBrush brush1(QColor(108, 106, 102, 255));
+        brush1.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Disabled, QPalette::WindowText, brush1);
+        caption->setPalette(palette);
+        QFont font;
+        font.setFamily(QString::fromUtf8("Arial Black"));
+        caption->setFont(font);
+        caption->setAlignment(Qt::AlignHCenter|Qt::AlignTop);
 
         retranslateUi(PhotoFrameClass);
 
@@ -81,6 +98,7 @@ public:
         photoWidget->setText(QString());
         defaultBorder->setText(QString());
         selectedBorder->setText(QString());
+        caption->setText(QApplication::translate("PhotoFrameClass", "caption", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
