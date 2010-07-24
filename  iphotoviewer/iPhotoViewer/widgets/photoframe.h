@@ -2,6 +2,7 @@
 #define PHOTOFRAME_H
 
 #include <QtGui/QWidget>
+#include <QTextStream>
 #include <QPixmap>
 #include "ui_photoframe.h"
 #include "model/Photo.h"

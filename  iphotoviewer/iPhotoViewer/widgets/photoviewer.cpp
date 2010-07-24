@@ -5,11 +5,15 @@ PhotoViewer::PhotoViewer(QWidget *parent)
 {
 	ui.setupUi(this);
 
-	this->setGeometry(0,0,parent->width(),parent->height());
-	QRect geo;
-	geo=ui.photo->geometry();
-	geo.setWidth(parent->width()-20);
-	geo.setHeight(parent->height()-60);
+	this->photo=new ClickLabel("",this);
+	QRect outerGeo=parent->geometry();
+	this->setGeometry(0,0,outerGeo.width(),outerGeo.height());
+
+	this->photo->setGeometry(10,50,outerGeo.width()-20,outerGeo.height()-60);
+	this->photo->show();
+
+	connect(this->photo, SIGNAL(clicked()), this, SLOT(goBack()));
+	connect(ui.goBack, SIGNAL(pressed()), this, SLOT(goBack()));
 }
 
 PhotoViewer::~PhotoViewer()
@@ -22,10 +26,10 @@ void PhotoViewer::setPhoto(Photo *p)
 	int x,y,h,w,width;
 	QPixmap *qp=new QPixmap(p->getImagePath());
 
-	if(ui.photo->width()>ui.photo->height())
-		width=ui.photo->height();
+	if(this->photo->width()>this->photo->height())
+		width=this->photo->height();
 	else
-		width=ui.photo->width();
+		width=this->photo->width();
 
 	w=qp->width();
 	h=qp->height();
@@ -34,16 +38,23 @@ void PhotoViewer::setPhoto(Photo *p)
 	{
 		h=(h*width)/w;
 		w=width;
-		x=0;
+		x=10;
 		y=(width-h)/2;
 	}
 	else
 	{
 		w=(w*width)/h;
 		h=width;
-		y=0;
+		y=50;
 		x=(width-w)/2;
 	}
 
-	ui.photo->setPixmap(qp->scaled(w,h));
+	this->photo->setGeometry(x,y,w,h);
+	this->photo->setPixmap(qp->scaled(w,h));
+}
+
+void PhotoViewer::goBack()
+{
+	this->hide();
+	delete this;
 }

@@ -84,7 +84,7 @@ void PhotoFrame::focusOutEvent(QFocusEvent *focus)
 
 void PhotoFrame::mouseDoubleClickEvent(QMouseEvent *event)
 {
-	PhotoViewer *pv=new PhotoViewer(this->parentWidget());
+	PhotoViewer *pv=new PhotoViewer(this->parentWidget()->parentWidget());
 	pv->setPhoto(this->p);
 	pv->show();
 }

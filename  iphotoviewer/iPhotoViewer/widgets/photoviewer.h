@@ -2,8 +2,10 @@
 #define PHOTOVIEWER_H
 
 #include <QtGui/QWidget>
+#include <QScrollArea>
 #include "ui_photoviewer.h"
 #include "model/Photo.h"
+#include "widgets/ClickLabel.h"
 
 class PhotoViewer : public QWidget
 {
@@ -17,6 +19,9 @@ public:
 
 private:
     Ui::PhotoViewerClass ui;
+    ClickLabel *photo;
+public slots:
+	void goBack();
 };
 
 #endif // PHOTOVIEWER_H
