@@ -40,10 +40,12 @@ void PhotoPanel::setModel(BaseList *list,int width)
 		{
 			if(i*labelsPerRow+j+1<=list->rowCount())
 			{
-				QLabel *lb=new QLabel();
+				//QLabel *lb=new QLabel();
+				PhotoFrame *pf=new PhotoFrame();
 				QModelIndex idx=list->index(i*labelsPerRow+j,0,QModelIndex());
 				Photo *p=(Photo*)list->get(idx);
-				QPixmap *pm=new QPixmap(p->getThumbPath());
+				pf->setPhoto(p,width);
+				/*QPixmap *pm=new QPixmap(p->getThumbPath());
 
 				int w=pm->width();
 				int h=pm->height();
@@ -57,22 +59,24 @@ void PhotoPanel::setModel(BaseList *list,int width)
 				{
 					w=w*width/h;
 					h=width;
-				}
-				lb->setPixmap(pm->scaled(w,h));
-				lb->setFixedHeight(width);
-				lb->setFixedWidth(width);
+				}*/
+				//lb->setPixmap(pm->scaled(w,h));
+				//lb->setFixedHeight(width);
+				//lb->setFixedWidth(width);
 				//lb->setGeometry(j*(width+10),i*(width+10),width,width);
 
-				grid->addWidget(lb,i,j);
+				//pf->setFixedHeight(width);
+				//pf->setFixedWidth(width);
+				grid->addWidget(pf,i,j);
 
 				//vbox->addWidget(lb,1,0);
 
 			}
-			else
+			/*else
 			{
 				QLabel *lb2=new QLabel("");
 				grid->addWidget(lb2,i,j);
-			}
+			}*/
 		}
 	}
 

@@ -9,6 +9,7 @@
 #include <QtGui/QWidget>
 #include "ui_photopanel.h"
 #include "model/BaseList.h"
+#include "photoframe.h"
 
 class PhotoPanel : public QWidget
 {
