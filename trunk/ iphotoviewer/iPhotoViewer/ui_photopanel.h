@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'photopanel.ui'
 **
-** Created: Sat Jul 24 01:22:02 2010
+** Created: Sat Jul 24 14:16:36 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
