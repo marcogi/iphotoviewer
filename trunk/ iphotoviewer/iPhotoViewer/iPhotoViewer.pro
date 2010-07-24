@@ -3,7 +3,8 @@ TARGET = iPhotoViewer
 QT += core \
     gui \
     xml
-HEADERS += widgets/ClickLabel.h \
+HEADERS += config/Config.h \
+    widgets/ClickLabel.h \
     widgets/photoviewer.h \
     widgets/photoframe.h \
     widgets/photopanel.h \
@@ -13,7 +14,8 @@ HEADERS += widgets/ClickLabel.h \
     model/Album.h \
     model/Photo.h \
     iphotoviewer.h
-SOURCES += widgets/ClickLabel.cpp \
+SOURCES += config/Config.cpp \
+    widgets/ClickLabel.cpp \
     widgets/photoviewer.cpp \
     widgets/photoframe.cpp \
     widgets/photopanel.cpp \
