@@ -13,6 +13,7 @@
 #include "model/Album.h"
 #include "model/Roll.h"
 #include "widgets/photopanel.h"
+#include "config/Config.h"
 
 class iPhotoViewer : public QMainWindow
 {

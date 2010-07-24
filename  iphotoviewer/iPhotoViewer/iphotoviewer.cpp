@@ -62,7 +62,8 @@ void iPhotoViewer::pushButtonPressed()
 	//ui.lstPhotos->addItem("Item");
 	//IPhotoPhotos *ipp=new IPhotoPhotos();
 	QString originalPath;
-	QString libraryPath="/home/david/Dropbox/iPhoto Library";
+	QString libraryPath=Config::getLibraryPath(); //"/home/david/Dropbox/iPhoto Library";
+
 	QDomDocument doc( "AdBookML" );
 	QFile file( libraryPath + "/AlbumData.xml");
 	if( !file.open( QIODevice::ReadOnly ) ){
