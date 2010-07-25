@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'photopanel.h'
 **
-** Created: Sat Jul 24 14:35:12 2010
+** Created: Sun Jul 25 14:02:54 2010
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
