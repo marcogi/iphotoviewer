@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'iphotoviewer.ui'
 **
-** Created: Sun Jul 25 12:09:39 2010
+** Created: Sun Jul 25 14:24:51 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -34,6 +34,8 @@ public:
     QVBoxLayout *verticalLayout;
     QListView *lstRolls;
     QListView *lstAlbums;
+    QWidget *widget_2;
+    QVBoxLayout *verticalLayout_2;
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
     QMenuBar *menubar;
@@ -42,7 +44,7 @@ public:
     {
         if (iPhotoViewerClass->objectName().isEmpty())
             iPhotoViewerClass->setObjectName(QString::fromUtf8("iPhotoViewerClass"));
-        iPhotoViewerClass->resize(799, 600);
+        iPhotoViewerClass->resize(799, 461);
         centralwidget = new QWidget(iPhotoViewerClass);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         horizontalLayout = new QHBoxLayout(centralwidget);
@@ -75,7 +77,13 @@ public:
 
         horizontalLayout->addWidget(widget);
 
-        scrollArea = new QScrollArea(centralwidget);
+        widget_2 = new QWidget(centralwidget);
+        widget_2->setObjectName(QString::fromUtf8("widget_2"));
+        verticalLayout_2 = new QVBoxLayout(widget_2);
+        verticalLayout_2->setSpacing(0);
+        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        scrollArea = new QScrollArea(widget_2);
         scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
         QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy2.setHorizontalStretch(0);
@@ -93,10 +101,13 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 517, 559));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 517, 420));
         scrollArea->setWidget(scrollAreaWidgetContents);
 
-        horizontalLayout->addWidget(scrollArea);
+        verticalLayout_2->addWidget(scrollArea);
+
+
+        horizontalLayout->addWidget(widget_2);
 
         iPhotoViewerClass->setCentralWidget(centralwidget);
         menubar = new QMenuBar(iPhotoViewerClass);
