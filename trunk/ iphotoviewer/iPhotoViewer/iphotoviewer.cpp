@@ -6,7 +6,7 @@ iPhotoViewer::iPhotoViewer(QWidget *parent)
 : QMainWindow(parent)
 {
 	ui.setupUi(this);
-	connect(ui.pushButton, SIGNAL(pressed()), this, SLOT(pushButtonPressed()));
+	//connect(ui.pushButton, SIGNAL(pressed()), this, SLOT(pushButtonPressed()));
 
 	pp=new PhotoPanel(ui.scrollArea);
 	//QVBoxLayout *layout = new QVBoxLayout;
@@ -14,6 +14,7 @@ iPhotoViewer::iPhotoViewer(QWidget *parent)
 	//layout->addWidget(pp);
 	ui.scrollArea->setWidget(pp);
 	//ui.scrollArea->setLayout(layout);
+	pushButtonPressed();
 }
 
 iPhotoViewer::~iPhotoViewer()
@@ -33,11 +34,11 @@ void iPhotoViewer::lstAlbumSelectionChanged()
 	BaseList *l=(BaseList*)ui.lstAlbums->model();
 	Album *a=(Album*)l->get(ui.lstAlbums->currentIndex());
 	BaseList *l2=a->getList();
-	cout << "Rows: " << l2->rowCount() << endl;
+	//cout << "Rows: " << l2->rowCount() << endl;
 
-	ui.lstPhotosInAlbum->setModel(l2);
-	cout << "Changed Model" << endl;
-	connect(ui.lstPhotosInAlbum->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstSelectionChanged()));
+	//ui.lstPhotosInAlbum->setModel(l2);
+	//cout << "Changed Model" << endl;
+	//connect(ui.lstPhotosInAlbum->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstSelectionChanged()));
 	//ui.label->setPixmap(QPixmap(p->getThumbPath()));
 
 	pp->setModel(l2,200);
@@ -50,9 +51,9 @@ void iPhotoViewer::lstRollSelectionChanged()
 	BaseList *l2=r->getPhotos();
 	//cout << "Rows: " << l2->rowCount() << endl;
 
-	ui.lstPhotosInAlbum->setModel(l2);
+	//ui.lstPhotosInAlbum->setModel(l2);
 	//cout << "Changed Model" << endl;
-	connect(ui.lstPhotosInAlbum->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstSelectionChanged()));
+	//connect(ui.lstPhotosInAlbum->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstSelectionChanged()));
 	//ui.label->setPixmap(QPixmap(p->getThumbPath()));
 	pp->setModel(l2,200);
 }
@@ -361,7 +362,7 @@ void iPhotoViewer::pushButtonPressed()
 		}
 	}
 
-	ui.lstPhotos->setModel(listOfPhotos);
+	//ui.lstPhotos->setModel(listOfPhotos);
 	//connect(ui.lstPhotos->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstSelectionChanged()));
 	ui.lstAlbums->setModel(listOfAlbums);
 	ui.lstRolls->setModel(listOfRolls);
