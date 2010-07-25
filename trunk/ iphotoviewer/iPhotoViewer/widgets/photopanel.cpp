@@ -11,13 +11,11 @@ PhotoPanel::~PhotoPanel()
 
 }
 
-void PhotoPanel::setModel(BaseList *list,int width)
+void PhotoPanel::setModel(BaseList *list,int thumbWidth)
 {
+	this->thumbWidth=thumbWidth;
 	int panelWidth=this->width();
-	//this->setGeometry(0,0,this->parentWidget()->width(),this->parentWidget()->height());
-
-
-	int labelsPerRow = floor(panelWidth/(width+10));
+	int labelsPerRow = floor(panelWidth/(thumbWidth+10));
 
 	int rows = ceil((float)list->rowCount() / (float)labelsPerRow);
 
@@ -32,53 +30,58 @@ void PhotoPanel::setModel(BaseList *list,int width)
 		delete this->layout();
 	}
 
-	QGridLayout *grid=new QGridLayout(this);
-	//grid->set
+	this->grid=new QGridLayout(this);
+	grid->setSpacing(5);
+
 	for(int i=0;i<rows;i++)
 	{
 		for(int j=0;j<labelsPerRow;j++)
 		{
 			if(i*labelsPerRow+j+1<=list->rowCount())
 			{
-				//QLabel *lb=new QLabel();
 				PhotoFrame *pf=new PhotoFrame();
 				QModelIndex idx=list->index(i*labelsPerRow+j,0,QModelIndex());
 				Photo *p=(Photo*)list->get(idx);
-				pf->setPhoto(p,width);
-				/*QPixmap *pm=new QPixmap(p->getThumbPath());
-
-				int w=pm->width();
-				int h=pm->height();
-
-				if(w>h)
-				{
-					h=h*width/w;
-					w=width;
-				}
-				else
-				{
-					w=w*width/h;
-					h=width;
-				}*/
-				//lb->setPixmap(pm->scaled(w,h));
-				//lb->setFixedHeight(width);
-				//lb->setFixedWidth(width);
-				//lb->setGeometry(j*(width+10),i*(width+10),width,width);
-
-				//pf->setFixedHeight(width);
-				//pf->setFixedWidth(width);
-				grid->addWidget(pf,i,j);
-
-				//vbox->addWidget(lb,1,0);
-
+				pf->setPhoto(p,thumbWidth);
+				this->grid->addWidget(pf,i,j);
 			}
-			/*else
-			{
-				QLabel *lb2=new QLabel("");
-				grid->addWidget(lb2,i,j);
-			}*/
 		}
 	}
+}
 
-	//grid->activate();
+void PhotoPanel::resizeEvent (QResizeEvent *event)
+{
+	//event->setAccepted(true);
+	//qDebug() << this->parentWidget()->parentWidget()->width() << endl;
+	int panelWidth=this->parentWidget()->parentWidget()->width();
+	int labelsPerRow = floor(panelWidth/(this->thumbWidth+10));
+
+	if(this->layout()!=0)
+	{
+		if(this->grid->columnCount()!=labelsPerRow)
+		{
+			QLayoutItem *child;
+			QList<QLayoutItem*> list;
+			while ((child = this->layout()->takeAt(0)) != 0)
+			{
+				list.append(child);
+				//delete child->widget();
+				//delete child;
+			}
+
+			int rows = ceil((float)list.count() / (float)labelsPerRow);
+
+			for(int i=0;i<rows;i++)
+			{
+				for(int j=0;j<labelsPerRow;j++)
+				{
+					if(i*labelsPerRow+j+1<=list.count())
+					{
+						QLayoutItem *item=list.at(i*labelsPerRow+j);
+						this->grid->addItem(item,i,j);
+					}
+				}
+			}
+		}
+	}
 }

@@ -5,6 +5,7 @@
 #include <QModelIndex>
 #include <QGridLayout>
 #include <cmath>
+#include <QDebug>
 #include "model/Photo.h"
 #include <QtGui/QWidget>
 #include "ui_photopanel.h"
@@ -20,9 +21,12 @@ public:
     ~PhotoPanel();
 
     void setModel(BaseList *list,int width);
-
+protected:
+    void resizeEvent(QResizeEvent *event);
 private:
     Ui::PhotoPanelClass ui;
+    QGridLayout *grid;
+    int thumbWidth;
 };
 
 #endif // PHOTOPANEL_H
