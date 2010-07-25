@@ -4,6 +4,7 @@ PhotoPanel::PhotoPanel(QWidget *parent)
 : QWidget(parent)
 {
 	ui.setupUi(this);
+	this->count=0;
 }
 
 PhotoPanel::~PhotoPanel()
@@ -52,12 +53,13 @@ void PhotoPanel::setModel(BaseList *list,int thumbWidth)
 void PhotoPanel::resizeEvent (QResizeEvent *event)
 {
 	//event->setAccepted(true);
-	//qDebug() << this->parentWidget()->parentWidget()->width() << endl;
+	//qDebug() << "Resize event" << this->count++;
 	int panelWidth=this->parentWidget()->parentWidget()->width();
 	int labelsPerRow = floor(panelWidth/(this->thumbWidth+10));
 
 	if(this->layout()!=0)
 	{
+		qDebug() << "old: " << this->grid->columnCount() << " new: " << labelsPerRow;
 		if(this->grid->columnCount()!=labelsPerRow)
 		{
 			QLayoutItem *child;
@@ -68,6 +70,9 @@ void PhotoPanel::resizeEvent (QResizeEvent *event)
 				//delete child->widget();
 				//delete child;
 			}
+			delete this->layout();
+			this->grid=new QGridLayout(this);
+			this->grid->setSpacing(5);
 
 			int rows = ceil((float)list.count() / (float)labelsPerRow);
 

@@ -27,6 +27,7 @@ private:
     Ui::PhotoPanelClass ui;
     QGridLayout *grid;
     int thumbWidth;
+    int count;
 };
 
 #endif // PHOTOPANEL_H
