@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'iphotoviewer.ui'
 **
-** Created: Sat Jul 24 14:16:36 2010
+** Created: Sun Jul 25 12:09:39 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -14,14 +14,13 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QListView>
 #include <QtGui/QMainWindow>
-#include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
-#include <QtGui/QPushButton>
 #include <QtGui/QScrollArea>
-#include <QtGui/QStatusBar>
+#include <QtGui/QVBoxLayout>
 #include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -30,47 +29,59 @@ class Ui_iPhotoViewerClass
 {
 public:
     QWidget *centralwidget;
-    QPushButton *pushButton;
-    QListView *lstPhotos;
-    QListView *lstAlbums;
-    QListView *lstPhotosInAlbum;
+    QHBoxLayout *horizontalLayout;
+    QWidget *widget;
+    QVBoxLayout *verticalLayout;
     QListView *lstRolls;
+    QListView *lstAlbums;
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
     QMenuBar *menubar;
-    QMenu *menuIPhotoViewer;
-    QStatusBar *statusbar;
 
     void setupUi(QMainWindow *iPhotoViewerClass)
     {
         if (iPhotoViewerClass->objectName().isEmpty())
             iPhotoViewerClass->setObjectName(QString::fromUtf8("iPhotoViewerClass"));
-        iPhotoViewerClass->resize(800, 600);
+        iPhotoViewerClass->resize(799, 600);
         centralwidget = new QWidget(iPhotoViewerClass);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
-        pushButton = new QPushButton(centralwidget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(10, 520, 251, 27));
-        lstPhotos = new QListView(centralwidget);
-        lstPhotos->setObjectName(QString::fromUtf8("lstPhotos"));
-        lstPhotos->setGeometry(QRect(10, 10, 251, 91));
-        lstAlbums = new QListView(centralwidget);
-        lstAlbums->setObjectName(QString::fromUtf8("lstAlbums"));
-        lstAlbums->setGeometry(QRect(10, 110, 251, 101));
-        lstPhotosInAlbum = new QListView(centralwidget);
-        lstPhotosInAlbum->setObjectName(QString::fromUtf8("lstPhotosInAlbum"));
-        lstPhotosInAlbum->setGeometry(QRect(10, 370, 251, 141));
-        lstRolls = new QListView(centralwidget);
-        lstRolls->setObjectName(QString::fromUtf8("lstRolls"));
-        lstRolls->setGeometry(QRect(10, 220, 251, 141));
-        scrollArea = new QScrollArea(centralwidget);
-        scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
-        scrollArea->setGeometry(QRect(270, 10, 521, 531));
-        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        horizontalLayout = new QHBoxLayout(centralwidget);
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        widget = new QWidget(centralwidget);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(scrollArea->sizePolicy().hasHeightForWidth());
-        scrollArea->setSizePolicy(sizePolicy);
+        sizePolicy.setHeightForWidth(widget->sizePolicy().hasHeightForWidth());
+        widget->setSizePolicy(sizePolicy);
+        verticalLayout = new QVBoxLayout(widget);
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        lstRolls = new QListView(widget);
+        lstRolls->setObjectName(QString::fromUtf8("lstRolls"));
+
+        verticalLayout->addWidget(lstRolls);
+
+        lstAlbums = new QListView(widget);
+        lstAlbums->setObjectName(QString::fromUtf8("lstAlbums"));
+        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(lstAlbums->sizePolicy().hasHeightForWidth());
+        lstAlbums->setSizePolicy(sizePolicy1);
+
+        verticalLayout->addWidget(lstAlbums);
+
+
+        horizontalLayout->addWidget(widget);
+
+        scrollArea = new QScrollArea(centralwidget);
+        scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(scrollArea->sizePolicy().hasHeightForWidth());
+        scrollArea->setSizePolicy(sizePolicy2);
         QPalette palette;
         QBrush brush(QColor(85, 85, 85, 255));
         brush.setStyle(Qt::SolidPattern);
@@ -82,20 +93,16 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 519, 529));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 517, 559));
         scrollArea->setWidget(scrollAreaWidgetContents);
+
+        horizontalLayout->addWidget(scrollArea);
+
         iPhotoViewerClass->setCentralWidget(centralwidget);
         menubar = new QMenuBar(iPhotoViewerClass);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 21));
-        menuIPhotoViewer = new QMenu(menubar);
-        menuIPhotoViewer->setObjectName(QString::fromUtf8("menuIPhotoViewer"));
+        menubar->setGeometry(QRect(0, 0, 799, 21));
         iPhotoViewerClass->setMenuBar(menubar);
-        statusbar = new QStatusBar(iPhotoViewerClass);
-        statusbar->setObjectName(QString::fromUtf8("statusbar"));
-        iPhotoViewerClass->setStatusBar(statusbar);
-
-        menubar->addAction(menuIPhotoViewer->menuAction());
 
         retranslateUi(iPhotoViewerClass);
 
@@ -105,8 +112,6 @@ public:
     void retranslateUi(QMainWindow *iPhotoViewerClass)
     {
         iPhotoViewerClass->setWindowTitle(QString());
-        pushButton->setText(QApplication::translate("iPhotoViewerClass", "Fill", 0, QApplication::UnicodeUTF8));
-        menuIPhotoViewer->setTitle(QApplication::translate("iPhotoViewerClass", "Datei", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
