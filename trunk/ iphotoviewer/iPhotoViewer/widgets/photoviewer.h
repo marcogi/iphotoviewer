@@ -3,6 +3,8 @@
 
 #include <QtGui/QWidget>
 #include <QScrollArea>
+#include <QLayout>
+#include <QDebug>
 #include "ui_photoviewer.h"
 #include "model/Photo.h"
 #include "widgets/ClickLabel.h"
@@ -16,10 +18,16 @@ public:
     ~PhotoViewer();
 
     void setPhoto(Photo *p);
-
+    void addRestoreLayout(QLayout *ql);
+    void addRestoreWidget(QWidget *qw);
+protected:
+    void resizeEvent (QResizeEvent *event);
 private:
     Ui::PhotoViewerClass ui;
     ClickLabel *photo;
+    Photo *tmp;
+    QList<QWidget*> *restoreQWidgetList;
+    QLayout *restoreLayout;
 public slots:
 	void goBack();
 };

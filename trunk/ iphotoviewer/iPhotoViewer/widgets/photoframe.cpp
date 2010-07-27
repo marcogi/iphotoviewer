@@ -84,7 +84,28 @@ void PhotoFrame::focusOutEvent(QFocusEvent *focus)
 
 void PhotoFrame::mouseDoubleClickEvent(QMouseEvent *event)
 {
-	PhotoViewer *pv=new PhotoViewer(this->parentWidget()->parentWidget());
+	// viewport -> scrollArea -> Widget
+	QWidget *parent=this->parentWidget()->parentWidget()->parentWidget();
+	QVBoxLayout *qvb=(QVBoxLayout*)parent->parentWidget()->layout();//->addWidget(pv);
+
+	PhotoViewer *pv=new PhotoViewer(parent);
+
+	// slider+scrollArea
+	int count=qvb->count();
+	int i=0;
+
+	for(i=0;i<count;i++)
+	{
+		QWidget *w1=qvb->itemAt(0)->widget();
+		pv->addRestoreWidget(w1);
+		w1->hide();
+		qvb->removeWidget(w1);
+	}
+
+	pv->addRestoreLayout(qvb);
+
+	qvb->addWidget(pv);
+
 	pv->setPhoto(this->p);
 	pv->show();
 }

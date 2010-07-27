@@ -9,8 +9,10 @@ PhotoViewer::PhotoViewer(QWidget *parent)
 	QRect outerGeo=parent->geometry();
 	this->setGeometry(0,0,outerGeo.width(),outerGeo.height());
 
-	this->photo->setGeometry(10,50,outerGeo.width()-20,outerGeo.height()-60);
-	this->photo->show();
+	//this->photo->setGeometry(10,50,outerGeo.width()-20,outerGeo.height()-60);
+	//this->photo->show();
+
+	restoreQWidgetList=new QList<QWidget*>();
 
 	connect(this->photo, SIGNAL(clicked()), this, SLOT(goBack()));
 	connect(ui.goBack, SIGNAL(pressed()), this, SLOT(goBack()));
@@ -23,38 +25,71 @@ PhotoViewer::~PhotoViewer()
 
 void PhotoViewer::setPhoto(Photo *p)
 {
-	int x,y,h,w,width;
+	tmp=p;
+	int sideBorder=0;
+	int minTop=50;
+	int maxWidth=this->width()-sideBorder*2;
+	int maxHeight=this->height()-minTop-sideBorder;
+
 	QPixmap *qp=new QPixmap(p->getImagePath());
+	int origWidth=qp->width();
+	int origHeight=qp->height();
 
-	if(this->photo->width()>this->photo->height())
-		width=this->photo->height();
-	else
-		width=this->photo->width();
+	int width,height,x,y;
 
-	w=qp->width();
-	h=qp->height();
-
-	if(w>h)
+	float factor=(float)maxWidth/(float)origWidth;
+	if((int)(origHeight*factor)>maxHeight)
 	{
-		h=(h*width)/w;
-		w=width;
-		x=10;
-		y=(width-h)/2;
+		factor=(float)maxHeight/(float)origHeight;
+		width=(int)(origWidth*factor);
+		height=maxHeight;
+		x=(maxWidth-width)/2+sideBorder;
+		y=minTop+sideBorder;
+
 	}
 	else
 	{
-		w=(w*width)/h;
-		h=width;
-		y=50;
-		x=(width-w)/2;
+		width=maxWidth;
+		height=(int)(origHeight*factor);
+		x=sideBorder;
+		y=(maxHeight-height)/2+minTop+sideBorder;
 	}
 
-	this->photo->setGeometry(x,y,w,h);
-	this->photo->setPixmap(qp->scaled(w,h));
+	this->photo->setGeometry(x,y,width,height);
+	this->photo->setPixmap(qp->scaled(width,height));
+	this->photo->show();
 }
 
 void PhotoViewer::goBack()
 {
+	// remove the PhotoViewer from the Layout...
+	this->restoreLayout->removeWidget(this);
 	this->hide();
+
+	int i;
+	for(i=0;i<this->restoreQWidgetList->count();i++)
+	{
+		QWidget *w1=this->restoreQWidgetList->at(i);
+		w1->show();
+		this->restoreLayout->addWidget(w1);
+	}
+
+
 	delete this;
+}
+
+void PhotoViewer::resizeEvent (QResizeEvent *event)
+{
+	//qDebug() << "Xresize";
+	this->setPhoto(this->tmp);
+}
+
+void PhotoViewer::addRestoreLayout(QLayout *ql)
+{
+	this->restoreLayout=ql;
+}
+
+void PhotoViewer::addRestoreWidget(QWidget *qw)
+{
+	this->restoreQWidgetList->append(qw);
 }

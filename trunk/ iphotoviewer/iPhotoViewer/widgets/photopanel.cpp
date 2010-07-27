@@ -59,7 +59,7 @@ void PhotoPanel::resizeEvent (QResizeEvent *event)
 
 	if(this->layout()!=0)
 	{
-		qDebug() << "old: " << this->grid->columnCount() << " new: " << labelsPerRow;
+		//qDebug() << "old: " << this->grid->columnCount() << " new: " << labelsPerRow;
 		if(this->grid->columnCount()!=labelsPerRow)
 		{
 			QLayoutItem *child;
@@ -73,6 +73,7 @@ void PhotoPanel::resizeEvent (QResizeEvent *event)
 			delete this->layout();
 			this->grid=new QGridLayout(this);
 			this->grid->setSpacing(5);
+
 
 			int rows = ceil((float)list.count() / (float)labelsPerRow);
 
