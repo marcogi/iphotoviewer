@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'iphotoviewer.ui'
 **
-** Created: Sun Jul 25 14:24:51 2010
+** Created: Tue Jul 27 21:01:57 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -14,12 +14,14 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QFrame>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QListView>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenuBar>
 #include <QtGui/QScrollArea>
+#include <QtGui/QSlider>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QWidget>
 
@@ -36,6 +38,9 @@ public:
     QListView *lstAlbums;
     QWidget *widget_2;
     QVBoxLayout *verticalLayout_2;
+    QFrame *frame;
+    QHBoxLayout *horizontalLayout_2;
+    QSlider *horizontalSlider;
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
     QMenuBar *menubar;
@@ -44,33 +49,46 @@ public:
     {
         if (iPhotoViewerClass->objectName().isEmpty())
             iPhotoViewerClass->setObjectName(QString::fromUtf8("iPhotoViewerClass"));
-        iPhotoViewerClass->resize(799, 461);
+        iPhotoViewerClass->resize(614, 338);
+        iPhotoViewerClass->setMinimumSize(QSize(614, 338));
         centralwidget = new QWidget(iPhotoViewerClass);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(centralwidget->sizePolicy().hasHeightForWidth());
+        centralwidget->setSizePolicy(sizePolicy);
         horizontalLayout = new QHBoxLayout(centralwidget);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         widget = new QWidget(centralwidget);
         widget->setObjectName(QString::fromUtf8("widget"));
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(widget->sizePolicy().hasHeightForWidth());
-        widget->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(widget->sizePolicy().hasHeightForWidth());
+        widget->setSizePolicy(sizePolicy1);
+        widget->setMinimumSize(QSize(200, 0));
+        widget->setMaximumSize(QSize(200, 16777215));
         verticalLayout = new QVBoxLayout(widget);
         verticalLayout->setContentsMargins(0, 0, 0, 0);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         lstRolls = new QListView(widget);
         lstRolls->setObjectName(QString::fromUtf8("lstRolls"));
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(10);
+        sizePolicy2.setHeightForWidth(lstRolls->sizePolicy().hasHeightForWidth());
+        lstRolls->setSizePolicy(sizePolicy2);
 
         verticalLayout->addWidget(lstRolls);
 
         lstAlbums = new QListView(widget);
         lstAlbums->setObjectName(QString::fromUtf8("lstAlbums"));
-        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Expanding);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(lstAlbums->sizePolicy().hasHeightForWidth());
-        lstAlbums->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(5);
+        sizePolicy3.setHeightForWidth(lstAlbums->sizePolicy().hasHeightForWidth());
+        lstAlbums->setSizePolicy(sizePolicy3);
 
         verticalLayout->addWidget(lstAlbums);
 
@@ -79,17 +97,42 @@ public:
 
         widget_2 = new QWidget(centralwidget);
         widget_2->setObjectName(QString::fromUtf8("widget_2"));
+        QSizePolicy sizePolicy4(QSizePolicy::Expanding, QSizePolicy::Preferred);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(widget_2->sizePolicy().hasHeightForWidth());
+        widget_2->setSizePolicy(sizePolicy4);
         verticalLayout_2 = new QVBoxLayout(widget_2);
         verticalLayout_2->setSpacing(0);
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        frame = new QFrame(widget_2);
+        frame->setObjectName(QString::fromUtf8("frame"));
+        sizePolicy.setHeightForWidth(frame->sizePolicy().hasHeightForWidth());
+        frame->setSizePolicy(sizePolicy);
+        frame->setMinimumSize(QSize(0, 20));
+        frame->setMaximumSize(QSize(16777215, 20));
+        frame->setFrameShape(QFrame::StyledPanel);
+        frame->setFrameShadow(QFrame::Raised);
+        horizontalLayout_2 = new QHBoxLayout(frame);
+        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        horizontalSlider = new QSlider(frame);
+        horizontalSlider->setObjectName(QString::fromUtf8("horizontalSlider"));
+        horizontalSlider->setOrientation(Qt::Horizontal);
+
+        horizontalLayout_2->addWidget(horizontalSlider);
+
+
+        verticalLayout_2->addWidget(frame);
+
         scrollArea = new QScrollArea(widget_2);
         scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
-        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(scrollArea->sizePolicy().hasHeightForWidth());
-        scrollArea->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy5(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(60);
+        sizePolicy5.setHeightForWidth(scrollArea->sizePolicy().hasHeightForWidth());
+        scrollArea->setSizePolicy(sizePolicy5);
         QPalette palette;
         QBrush brush(QColor(85, 85, 85, 255));
         brush.setStyle(Qt::SolidPattern);
@@ -101,7 +144,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 517, 420));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 388, 277));
         scrollArea->setWidget(scrollAreaWidgetContents);
 
         verticalLayout_2->addWidget(scrollArea);
@@ -112,7 +155,7 @@ public:
         iPhotoViewerClass->setCentralWidget(centralwidget);
         menubar = new QMenuBar(iPhotoViewerClass);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 799, 21));
+        menubar->setGeometry(QRect(0, 0, 614, 21));
         iPhotoViewerClass->setMenuBar(menubar);
 
         retranslateUi(iPhotoViewerClass);
