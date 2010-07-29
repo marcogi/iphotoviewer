@@ -14,12 +14,26 @@ iPhotoViewer::iPhotoViewer(QWidget *parent)
 	//layout->addWidget(pp);
 	ui.scrollArea->setWidget(pp);
 	//ui.scrollArea->setLayout(layout);
+
+	ui.zoomSlider->setRange(MIN_SLIDER,MAX_SLIDER);
+	ui.zoomSlider->setValue(3);
+	//ui.zoomSlider->setPageStep(10);
+	ui.zoomSlider->setSingleStep(1);
+
+	connect(ui.zoomSlider,SIGNAL(valueChanged(int)),this,SLOT(sliderValueChanged(int)));
+
 	pushButtonPressed();
 }
 
 iPhotoViewer::~iPhotoViewer()
 {
 
+}
+
+void iPhotoViewer::sliderValueChanged(int value)
+{
+	//qDebug() << "Slider value " << value << " width " << value*BASE_SIZE;
+	pp->resize(value*BASE_SIZE);
 }
 
 void iPhotoViewer::lstSelectionChanged()
@@ -41,7 +55,7 @@ void iPhotoViewer::lstAlbumSelectionChanged()
 	//connect(ui.lstPhotosInAlbum->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstSelectionChanged()));
 	//ui.label->setPixmap(QPixmap(p->getThumbPath()));
 
-	pp->setModel(l2,200);
+	pp->setModel(l2,ui.zoomSlider->value()*BASE_SIZE);
 }
 
 void iPhotoViewer::lstRollSelectionChanged()
@@ -55,7 +69,7 @@ void iPhotoViewer::lstRollSelectionChanged()
 	//cout << "Changed Model" << endl;
 	//connect(ui.lstPhotosInAlbum->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstSelectionChanged()));
 	//ui.label->setPixmap(QPixmap(p->getThumbPath()));
-	pp->setModel(l2,200);
+	pp->setModel(l2,ui.zoomSlider->value()*BASE_SIZE);
 }
 
 void iPhotoViewer::pushButtonPressed()
@@ -370,3 +384,4 @@ void iPhotoViewer::pushButtonPressed()
 	connect(ui.lstRolls->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstRollSelectionChanged()));
 
 }
+
