@@ -12,16 +12,14 @@ PhotoFrame::~PhotoFrame()
 
 }
 
-void PhotoFrame::setPhoto(Photo *p,int width)
+void PhotoFrame::resize(int value)
 {
-	this->setGeometry(0,0,width,width);
-	this->p=p;
-	int x,y,w,h;
+	this->setGeo(value);
+}
 
-	QPixmap *qp=new QPixmap(p->getThumbPath());
-
-	w=qp->width();
-	h=qp->height();
+void PhotoFrame::setGeo(int width)
+{
+	//qDebug() << "Width " << width;
 
 	if(w>h)
 	{
@@ -42,18 +40,39 @@ void PhotoFrame::setPhoto(Photo *p,int width)
 	this->setFixedHeight(width+20);
 	this->setFixedWidth(width);
 
-	ui.defaultBorder->setToolTip(p->getCaption());
-	ui.selectedBorder->setToolTip(p->getCaption());
-
 	ui.caption->setGeometry(0,y+h+5,width,15);
-	ui.caption->setText(p->getCaption());
 	ui.photoWidget->setGeometry(x,y,w,h);
+	ui.photoWidget2->setGeometry(x,y,w,h);
 	ui.defaultBorder->setGeometry(x,y,w,h);
 	ui.selectedBorder->setGeometry(x,y,w,h);
+}
+
+void PhotoFrame::setPhoto(Photo *p,int width)
+{
+	//this->setGeometry(0,0,width,width);
+	this->p=p;
+	QPixmap *qp=new QPixmap(p->getThumbPath());
+	w=qp->width();
+	h=qp->height();
+
+	this->setGeo(width);
+
+	ui.defaultBorder->setToolTip(p->getCaption());
+	ui.selectedBorder->setToolTip(p->getCaption());
+	ui.caption->setText(p->getCaption());
 
 	ui.selectedBorder->hide();
 
-	ui.photoWidget->setPixmap(qp->scaled(w,h));
+	//ui.photoWidget->setPixmap(qp->scaled(w,h));
+	QGraphicsScene *scene=new QGraphicsScene();
+	scene->addPixmap(*qp);
+
+	ui.photoWidget->setScaledContents(true);
+
+	ui.photoWidget2->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
+	ui.photoWidget2->setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
+	ui.photoWidget2->setScene(scene);
+
 }
 
 void PhotoFrame::focusInEvent(QFocusEvent *focus)

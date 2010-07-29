@@ -32,6 +32,7 @@ public slots:
 	void lstSelectionChanged();
 	void lstAlbumSelectionChanged();
 	void lstRollSelectionChanged();
+	void sliderValueChanged(int value);
 };
 
 #endif // IPHOTOVIEWER_H

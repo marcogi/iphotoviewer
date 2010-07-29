@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'iphotoviewer.ui'
 **
-** Created: Tue Jul 27 21:01:57 2010
+** Created: Thu Jul 29 21:01:07 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -40,7 +40,7 @@ public:
     QVBoxLayout *verticalLayout_2;
     QFrame *frame;
     QHBoxLayout *horizontalLayout_2;
-    QSlider *horizontalSlider;
+    QSlider *zoomSlider;
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
     QMenuBar *menubar;
@@ -117,11 +117,11 @@ public:
         horizontalLayout_2 = new QHBoxLayout(frame);
         horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        horizontalSlider = new QSlider(frame);
-        horizontalSlider->setObjectName(QString::fromUtf8("horizontalSlider"));
-        horizontalSlider->setOrientation(Qt::Horizontal);
+        zoomSlider = new QSlider(frame);
+        zoomSlider->setObjectName(QString::fromUtf8("zoomSlider"));
+        zoomSlider->setOrientation(Qt::Horizontal);
 
-        horizontalLayout_2->addWidget(horizontalSlider);
+        horizontalLayout_2->addWidget(zoomSlider);
 
 
         verticalLayout_2->addWidget(frame);
@@ -144,7 +144,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 388, 277));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 386, 269));
         scrollArea->setWidget(scrollAreaWidgetContents);
 
         verticalLayout_2->addWidget(scrollArea);
@@ -155,7 +155,7 @@ public:
         iPhotoViewerClass->setCentralWidget(centralwidget);
         menubar = new QMenuBar(iPhotoViewerClass);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 614, 21));
+        menubar->setGeometry(QRect(0, 0, 614, 27));
         iPhotoViewerClass->setMenuBar(menubar);
 
         retranslateUi(iPhotoViewerClass);

@@ -12,6 +12,10 @@
 #include <QFile>
 #include <QMessageBox>
 
+#define MIN_SLIDER 30
+#define MAX_SLIDER 100
+#define BASE_SIZE 2
+
 class Config {
 public:
 	Config();

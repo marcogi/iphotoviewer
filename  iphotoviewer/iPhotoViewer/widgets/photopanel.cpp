@@ -12,6 +12,12 @@ PhotoPanel::~PhotoPanel()
 
 }
 
+void PhotoPanel::resize(int value)
+{
+	this->thumbWidth=value;
+	this->resizeEvent(0);
+}
+
 void PhotoPanel::setModel(BaseList *list,int thumbWidth)
 {
 	this->thumbWidth=thumbWidth;
@@ -60,7 +66,7 @@ void PhotoPanel::resizeEvent (QResizeEvent *event)
 	if(this->layout()!=0)
 	{
 		//qDebug() << "old: " << this->grid->columnCount() << " new: " << labelsPerRow;
-		if(this->grid->columnCount()!=labelsPerRow)
+		//if(this->grid->columnCount()!=labelsPerRow)
 		{
 			QLayoutItem *child;
 			QList<QLayoutItem*> list;
@@ -84,6 +90,8 @@ void PhotoPanel::resizeEvent (QResizeEvent *event)
 					if(i*labelsPerRow+j+1<=list.count())
 					{
 						QLayoutItem *item=list.at(i*labelsPerRow+j);
+						PhotoFrame *pf=(PhotoFrame*)item->widget();
+						pf->resize(this->thumbWidth);
 						this->grid->addItem(item,i,j);
 					}
 				}

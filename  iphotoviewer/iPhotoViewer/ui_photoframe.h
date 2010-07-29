@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'photoframe.ui'
 **
-** Created: Sat Jul 24 14:16:36 2010
+** Created: Wed Jul 28 21:22:45 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -14,6 +14,7 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QGraphicsView>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QWidget>
@@ -27,6 +28,7 @@ public:
     QLabel *defaultBorder;
     QLabel *selectedBorder;
     QLabel *caption;
+    QGraphicsView *photoWidget2;
 
     void setupUi(QWidget *PhotoFrameClass)
     {
@@ -86,6 +88,23 @@ public:
         font.setFamily(QString::fromUtf8("Arial Black"));
         caption->setFont(font);
         caption->setAlignment(Qt::AlignHCenter|Qt::AlignTop);
+        photoWidget2 = new QGraphicsView(PhotoFrameClass);
+        photoWidget2->setObjectName(QString::fromUtf8("photoWidget2"));
+        photoWidget2->setGeometry(QRect(20, 80, 256, 192));
+        photoWidget2->setStyleSheet(QString::fromUtf8("QGraphicsView#photoWidget2 { \n"
+"border-width: 5px; \n"
+"border-style: outset; \n"
+"border-color: #FFFF00; \n"
+"border-radius: 10px; \n"
+"/*background: #FFFFFF; */\n"
+"color: #000000; \n"
+"selection-background-color:#000000; \n"
+"}"));
+        photoWidget2->raise();
+        photoWidget->raise();
+        defaultBorder->raise();
+        selectedBorder->raise();
+        caption->raise();
 
         retranslateUi(PhotoFrameClass);
 

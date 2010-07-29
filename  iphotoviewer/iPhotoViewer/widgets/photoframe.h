@@ -16,13 +16,16 @@ public:
     ~PhotoFrame();
 
     void setPhoto(Photo *p,int width);
+    void resize(int value);
 protected:
     void focusInEvent(QFocusEvent *focus);
     void focusOutEvent(QFocusEvent *focus);
     void mouseDoubleClickEvent(QMouseEvent *event);
 private:
+    void setGeo(int width);
     Ui::PhotoFrameClass ui;
     Photo *p;
+    int x,y,w,h;
 };
 
 #endif // PHOTOFRAME_H

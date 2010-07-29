@@ -21,6 +21,7 @@ public:
     ~PhotoPanel();
 
     void setModel(BaseList *list,int width);
+    void resize(int value);
 protected:
     void resizeEvent(QResizeEvent *event);
 private:

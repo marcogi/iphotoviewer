@@ -146,6 +146,32 @@ selection-background-color:#000000;
     <set>Qt::AlignHCenter|Qt::AlignTop</set>
    </property>
   </widget>
+  <widget class="QGraphicsView" name="photoWidget2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>80</y>
+     <width>256</width>
+     <height>192</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QGraphicsView#photoWidget2 { 
+border-width: 5px; 
+border-style: outset; 
+border-color: #FFFF00; 
+border-radius: 10px; 
+/*background: #FFFFFF; */
+color: #000000; 
+selection-background-color:#000000; 
+}</string>
+   </property>
+  </widget>
+  <zorder>photoWidget2</zorder>
+  <zorder>photoWidget</zorder>
+  <zorder>defaultBorder</zorder>
+  <zorder>selectedBorder</zorder>
+  <zorder>caption</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
