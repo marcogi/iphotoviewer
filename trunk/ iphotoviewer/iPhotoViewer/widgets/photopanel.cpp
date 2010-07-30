@@ -51,6 +51,7 @@ void PhotoPanel::setModel(BaseList *list,int thumbWidth)
 				Photo *p=(Photo*)list->get(idx);
 				pf->setPhoto(p,thumbWidth);
 				this->grid->addWidget(pf,i,j);
+				QApplication::processEvents();
 			}
 		}
 	}

@@ -43,7 +43,7 @@ selection-background-color:#000000;
   <widget class="QLabel" name="defaultBorder">
    <property name="geometry">
     <rect>
-     <x>100</x>
+     <x>190</x>
      <y>50</y>
      <width>131</width>
      <height>151</height>
@@ -51,11 +51,10 @@ selection-background-color:#000000;
    </property>
    <property name="styleSheet">
     <string notr="true">QLabel#defaultBorder { 
-border-width: 5px; 
-border-style: outset; 
-border-color: #DDDDDD; 
+border-width: 1px; 
+border-style: solid; 
+border-color: #000000; 
 border-radius: 10px; 
-/*background: #FFFFFF; */
 color: #000000; 
 selection-background-color:#000000; 
 }</string>
@@ -146,6 +145,10 @@ selection-background-color:#000000;
     <set>Qt::AlignHCenter|Qt::AlignTop</set>
    </property>
   </widget>
+  <zorder>photoWidget</zorder>
+  <zorder>selectedBorder</zorder>
+  <zorder>caption</zorder>
+  <zorder>defaultBorder</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
