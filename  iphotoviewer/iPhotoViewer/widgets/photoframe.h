@@ -25,7 +25,7 @@ private:
     void setGeo(int width);
     Ui::PhotoFrameClass ui;
     Photo *p;
-    int x,y,w,h;
+    int x,y,w,h,wOrig,hOrig;
 };
 
 #endif // PHOTOFRAME_H

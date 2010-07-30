@@ -20,6 +20,8 @@ void PhotoFrame::resize(int value)
 void PhotoFrame::setGeo(int width)
 {
 	//qDebug() << "Width " << width;
+	w=wOrig;
+	h=hOrig;
 
 	if(w>h)
 	{
@@ -52,8 +54,8 @@ void PhotoFrame::setPhoto(Photo *p,int width)
 	//this->setGeometry(0,0,width,width);
 	this->p=p;
 	QPixmap *qp=new QPixmap(p->getThumbPath());
-	w=qp->width();
-	h=qp->height();
+	wOrig=qp->width();
+	hOrig=qp->height();
 
 	this->setGeo(width);
 
@@ -64,14 +66,16 @@ void PhotoFrame::setPhoto(Photo *p,int width)
 	ui.selectedBorder->hide();
 
 	//ui.photoWidget->setPixmap(qp->scaled(w,h));
-	QGraphicsScene *scene=new QGraphicsScene();
-	scene->addPixmap(*qp);
+	//QGraphicsScene *scene=new QGraphicsScene();
+	//scene->addPixmap(*qp);
 
 	ui.photoWidget->setScaledContents(true);
+	ui.photoWidget->setPixmap(*qp);
 
-	ui.photoWidget2->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
-	ui.photoWidget2->setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
-	ui.photoWidget2->setScene(scene);
+	ui.photoWidget2->hide();
+	//ui.photoWidget2->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
+	//ui.photoWidget2->setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
+	//ui.photoWidget2->setScene(scene);
 
 }
 
