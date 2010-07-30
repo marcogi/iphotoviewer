@@ -43,7 +43,7 @@ selection-background-color:#000000;
   <widget class="QLabel" name="defaultBorder">
    <property name="geometry">
     <rect>
-     <x>140</x>
+     <x>100</x>
      <y>50</y>
      <width>131</width>
      <height>151</height>
@@ -75,7 +75,7 @@ selection-background-color:#000000;
    </property>
    <property name="styleSheet">
     <string notr="true">QLabel#selectedBorder { 
-border-width: 5px; 
+border-width: 3px; 
 border-style: outset; 
 border-color: #FFFF00; 
 border-radius: 10px; 
@@ -146,32 +146,6 @@ selection-background-color:#000000;
     <set>Qt::AlignHCenter|Qt::AlignTop</set>
    </property>
   </widget>
-  <widget class="QGraphicsView" name="photoWidget2">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>80</y>
-     <width>256</width>
-     <height>192</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QGraphicsView#photoWidget2 { 
-border-width: 5px; 
-border-style: outset; 
-border-color: #FFFF00; 
-border-radius: 10px; 
-/*background: #FFFFFF; */
-color: #000000; 
-selection-background-color:#000000; 
-}</string>
-   </property>
-  </widget>
-  <zorder>photoWidget2</zorder>
-  <zorder>photoWidget</zorder>
-  <zorder>defaultBorder</zorder>
-  <zorder>selectedBorder</zorder>
-  <zorder>caption</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
