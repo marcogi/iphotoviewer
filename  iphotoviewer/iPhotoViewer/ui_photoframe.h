@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'photoframe.ui'
 **
-** Created: Fri Jul 30 19:59:42 2010
+** Created: Fri Jul 30 21:37:30 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -48,13 +48,12 @@ public:
 "}"));
         defaultBorder = new QLabel(PhotoFrameClass);
         defaultBorder->setObjectName(QString::fromUtf8("defaultBorder"));
-        defaultBorder->setGeometry(QRect(100, 50, 131, 151));
+        defaultBorder->setGeometry(QRect(190, 50, 131, 151));
         defaultBorder->setStyleSheet(QString::fromUtf8("QLabel#defaultBorder { \n"
-"border-width: 5px; \n"
-"border-style: outset; \n"
-"border-color: #DDDDDD; \n"
+"border-width: 1px; \n"
+"border-style: solid; \n"
+"border-color: #000000; \n"
 "border-radius: 10px; \n"
-"/*background: #FFFFFF; */\n"
 "color: #000000; \n"
 "selection-background-color:#000000; \n"
 "}"));
@@ -86,6 +85,10 @@ public:
         font.setFamily(QString::fromUtf8("Arial Black"));
         caption->setFont(font);
         caption->setAlignment(Qt::AlignHCenter|Qt::AlignTop);
+        photoWidget->raise();
+        selectedBorder->raise();
+        caption->raise();
+        defaultBorder->raise();
 
         retranslateUi(PhotoFrameClass);
 

@@ -17,7 +17,7 @@ public:
     PhotoViewer(QWidget *parent = 0);
     ~PhotoViewer();
 
-    void setPhoto(Photo *p);
+    void setPhoto(Photo *p,QPixmap *thumb);
     void addRestoreLayout(QLayout *ql);
     void addRestoreWidget(QWidget *qw);
 protected:
@@ -26,6 +26,8 @@ private:
     Ui::PhotoViewerClass ui;
     ClickLabel *photo;
     Photo *tmp;
+    QPixmap *tmpQP;
+    bool firstTime;
     QList<QWidget*> *restoreQWidgetList;
     QLayout *restoreLayout;
 public slots:

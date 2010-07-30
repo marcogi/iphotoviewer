@@ -54,6 +54,7 @@ void PhotoFrame::setPhoto(Photo *p,int width)
 	//this->setGeometry(0,0,width,width);
 	this->p=p;
 	QPixmap *qp=new QPixmap(p->getThumbPath());
+	this->thumb=qp;
 	wOrig=qp->width();
 	hOrig=qp->height();
 
@@ -83,7 +84,7 @@ void PhotoFrame::setPhoto(Photo *p,int width)
 void PhotoFrame::focusInEvent(QFocusEvent *focus)
 {
 	ui.selectedBorder->show();
-	ui.defaultBorder->hide();
+	ui.defaultBorder->show();
     ui.photoWidget->setStyleSheet(CSS_ROUND);
     //ui.photoWidget->hide();
     //ui.photoWidget->show();
@@ -139,6 +140,6 @@ void PhotoFrame::mouseDoubleClickEvent(QMouseEvent *event)
 
 	qvb->addWidget(pv);
 
-	pv->setPhoto(this->p);
+	pv->setPhoto(this->p,this->thumb);
 	pv->show();
 }

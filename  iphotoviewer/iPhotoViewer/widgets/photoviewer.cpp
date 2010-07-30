@@ -4,6 +4,7 @@ PhotoViewer::PhotoViewer(QWidget *parent)
 : QWidget(parent)
 {
 	ui.setupUi(this);
+	this->firstTime=true;
 
 	this->photo=new ClickLabel("",this);
 	QRect outerGeo=parent->geometry();
@@ -23,17 +24,18 @@ PhotoViewer::~PhotoViewer()
 
 }
 
-void PhotoViewer::setPhoto(Photo *p)
+void PhotoViewer::setPhoto(Photo *p,QPixmap *thumb)
 {
 	tmp=p;
+	tmpQP=thumb;
+
 	int sideBorder=0;
 	int minTop=50;
 	int maxWidth=this->width()-sideBorder*2;
 	int maxHeight=this->height()-minTop-sideBorder;
 
-	QPixmap *qp=new QPixmap(p->getImagePath());
-	int origWidth=qp->width();
-	int origHeight=qp->height();
+	int origWidth=thumb->width();
+	int origHeight=thumb->height();
 
 	int width,height,x,y;
 
@@ -56,8 +58,18 @@ void PhotoViewer::setPhoto(Photo *p)
 	}
 
 	this->photo->setGeometry(x,y,width,height);
-	this->photo->setPixmap(qp->scaled(width,height));
-	this->photo->show();
+
+	if(firstTime)
+	{
+		this->photo->setScaledContents(true);
+		this->photo->setPixmap(*thumb);
+		this->photo->show();
+		QApplication::processEvents();
+		// set the real image later for performance...
+		QPixmap *qp=new QPixmap(p->getImagePath());
+		this->photo->setPixmap(*qp);
+		firstTime=false;
+	}
 }
 
 void PhotoViewer::goBack()
@@ -81,7 +93,7 @@ void PhotoViewer::goBack()
 void PhotoViewer::resizeEvent (QResizeEvent *event)
 {
 	//qDebug() << "Xresize";
-	this->setPhoto(this->tmp);
+	this->setPhoto(this->tmp,this->tmpQP);
 }
 
 void PhotoViewer::addRestoreLayout(QLayout *ql)
