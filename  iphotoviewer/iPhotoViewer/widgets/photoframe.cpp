@@ -49,12 +49,41 @@ void PhotoFrame::setGeo(int width)
 	ui.selectedBorder->setGeometry(x,y,w,h);
 }
 
-void PhotoFrame::setPhoto(Photo *p,int width)
+
+void PhotoFrame::setPhoto(Photo *p,int width,QString caption,int mode,Roll *r)
 {
 	//this->setGeometry(0,0,width,width);
 	this->p=p;
+	this->mode=mode;
 	QPixmap *qp=new QPixmap(p->getThumbPath());
+
+	// in roll mode we want square thumbs...
+	if(mode==MODE_ROLL)
+	{
+		this->r=r;
+		int x,y,w,h;
+		if(qp->width()>qp->height())
+		{
+			y=0;
+			w=qp->height();
+			h=w;
+			x=(qp->width()-h)/2;
+		}
+		else
+		{
+			x=0;
+			w=qp->width();
+			h=w;
+			y=(qp->height()-w)/2;
+		}
+		qDebug() << x << "-" << y << "-" << w << "-" << h << endl;
+		*qp=qp->copy(x,y,w,h);
+	}
+
 	this->thumb=qp;
+	this->width=width;
+
+
 	wOrig=qp->width();
 	hOrig=qp->height();
 
@@ -62,7 +91,7 @@ void PhotoFrame::setPhoto(Photo *p,int width)
 
 	ui.defaultBorder->setToolTip(p->getCaption());
 	ui.selectedBorder->setToolTip(p->getCaption());
-	ui.caption->setText(p->getCaption());
+	ui.caption->setText(caption);
 
 	ui.defaultBorder->hide();
 	ui.selectedBorder->hide();
@@ -85,9 +114,9 @@ void PhotoFrame::focusInEvent(QFocusEvent *focus)
 {
 	ui.selectedBorder->show();
 	ui.defaultBorder->show();
-    ui.photoWidget->setStyleSheet(CSS_ROUND);
-    //ui.photoWidget->hide();
-    //ui.photoWidget->show();
+	ui.photoWidget->setStyleSheet(CSS_ROUND);
+	//ui.photoWidget->hide();
+	//ui.photoWidget->show();
 
 	QPalette palette;
 	QBrush brush(QColor(255, 255, 0, 255));
@@ -119,27 +148,59 @@ void PhotoFrame::focusOutEvent(QFocusEvent *focus)
 void PhotoFrame::mouseDoubleClickEvent(QMouseEvent *event)
 {
 	// viewport -> scrollArea -> Widget
-	QWidget *parent=this->parentWidget()->parentWidget()->parentWidget();
-	QVBoxLayout *qvb=(QVBoxLayout*)parent->parentWidget()->layout();//->addWidget(pv);
-
-	PhotoViewer *pv=new PhotoViewer(parent);
-
-	// slider+scrollArea
-	int count=qvb->count();
-	int i=0;
-
-	for(i=0;i<count;i++)
+	if(this->mode==MODE_PHOTO)
 	{
-		QWidget *w1=qvb->itemAt(0)->widget();
-		pv->addRestoreWidget(w1);
-		w1->hide();
-		qvb->removeWidget(w1);
+		QWidget *parent=this->parentWidget()->parentWidget()->parentWidget();
+		QVBoxLayout *qvb=(QVBoxLayout*)parent->parentWidget()->layout();//->addWidget(pv);
+
+		PhotoViewer *pv=new PhotoViewer(parent);
+
+		// slider+scrollArea
+		int count=qvb->count();
+		int i=0;
+
+		for(i=0;i<count;i++)
+		{
+			QWidget *w1=qvb->itemAt(0)->widget();
+			pv->addRestoreWidget(w1);
+			w1->hide();
+			qvb->removeWidget(w1);
+		}
+
+		pv->addRestoreLayout(qvb);
+
+		qvb->addWidget(pv);
+
+		pv->setPhoto(this->p,this->thumb);
+		pv->show();
 	}
+	else if(this->mode==MODE_ROLL)
+	{
+		QWidget *parent=this->parentWidget();//->parentWidget();
+		qDebug() << this->parentWidget()->objectName() << endl;
 
-	pv->addRestoreLayout(qvb);
+		//QGridLayout *qvb=(QGridLayout*)parent->parentWidget()->layout();
+		//QVBoxLayout *qvb=(QVBoxLayout*)parent->parentWidget()->layout();//->addWidget(pv);
 
-	qvb->addWidget(pv);
+		PhotoPanel *pp=(PhotoPanel*)parent;
+		QGridLayout *qvb=(QGridLayout*)pp->layout();
+		// slider+scrollArea
+		int count=qvb->count();
+		int i=0;
 
-	pv->setPhoto(this->p,this->thumb);
-	pv->show();
+		for(i=0;i<count;i++)
+		{
+			QWidget *w1=qvb->itemAt(0)->widget();
+			//pv->addRestoreWidget(w1);
+			w1->hide();
+			qvb->removeWidget(w1);
+		}
+
+		//pv->addRestoreLayout(qvb);
+
+		//qvb->addWidget(pp);
+
+		pp->setModel(this->r->getPhotos(),width,MODE_PHOTO);
+		pp->show();
+	}
 }

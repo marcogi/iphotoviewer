@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'iphotoviewer.h'
 **
-** Created: Fri Jul 30 22:01:31 2010
+** Created: Fri Aug 13 22:18:19 2010
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_iPhotoViewer[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -33,16 +33,18 @@ static const uint qt_meta_data_iPhotoViewer[] = {
  // slots: signature, parameters, type, tag, flags
       14,   13,   13,   13, 0x0a,
       34,   13,   13,   13, 0x0a,
-      56,   13,   13,   13, 0x0a,
-      83,   13,   13,   13, 0x0a,
-     115,  109,   13,   13, 0x0a,
+      55,   13,   13,   13, 0x0a,
+      77,   13,   13,   13, 0x0a,
+     104,   13,   13,   13, 0x0a,
+     136,  130,   13,   13, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_iPhotoViewer[] = {
     "iPhotoViewer\0\0pushButtonPressed()\0"
-    "lstSelectionChanged()\0lstAlbumSelectionChanged()\0"
+    "pushButtonPressed2()\0lstSelectionChanged()\0"
+    "lstAlbumSelectionChanged()\0"
     "lstRollSelectionChanged()\0value\0"
     "sliderValueChanged(int)\0"
 };
@@ -77,13 +79,14 @@ int iPhotoViewer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: pushButtonPressed(); break;
-        case 1: lstSelectionChanged(); break;
-        case 2: lstAlbumSelectionChanged(); break;
-        case 3: lstRollSelectionChanged(); break;
-        case 4: sliderValueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 1: pushButtonPressed2(); break;
+        case 2: lstSelectionChanged(); break;
+        case 3: lstAlbumSelectionChanged(); break;
+        case 4: lstRollSelectionChanged(); break;
+        case 5: sliderValueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
-        _id -= 5;
+        _id -= 6;
     }
     return _id;
 }

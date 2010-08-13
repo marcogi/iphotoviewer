@@ -135,7 +135,8 @@ selection-background-color:#000000;
    </property>
    <property name="font">
     <font>
-     <family>Arial Black</family>
+     <family>Andale Mono</family>
+     <pointsize>8</pointsize>
     </font>
    </property>
    <property name="text">
