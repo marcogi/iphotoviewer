@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'iphotoviewer.ui'
 **
-** Created: Thu Jul 29 21:01:07 2010
+** Created: Fri Aug 13 20:48:31 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -20,6 +20,7 @@
 #include <QtGui/QListView>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenuBar>
+#include <QtGui/QPushButton>
 #include <QtGui/QScrollArea>
 #include <QtGui/QSlider>
 #include <QtGui/QVBoxLayout>
@@ -36,6 +37,7 @@ public:
     QVBoxLayout *verticalLayout;
     QListView *lstRolls;
     QListView *lstAlbums;
+    QPushButton *pushButton;
     QWidget *widget_2;
     QVBoxLayout *verticalLayout_2;
     QFrame *frame;
@@ -91,6 +93,11 @@ public:
         lstAlbums->setSizePolicy(sizePolicy3);
 
         verticalLayout->addWidget(lstAlbums);
+
+        pushButton = new QPushButton(widget);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+
+        verticalLayout->addWidget(pushButton);
 
 
         horizontalLayout->addWidget(widget);
@@ -166,6 +173,7 @@ public:
     void retranslateUi(QMainWindow *iPhotoViewerClass)
     {
         iPhotoViewerClass->setWindowTitle(QString());
+        pushButton->setText(QApplication::translate("iPhotoViewerClass", "Rolls", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

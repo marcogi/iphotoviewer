@@ -18,7 +18,7 @@ void PhotoPanel::resize(int value)
 	this->resizeEvent(0);
 }
 
-void PhotoPanel::setModel(BaseList *list,int thumbWidth)
+void PhotoPanel::setModel(BaseList *list,int thumbWidth,int mode)
 {
 	this->thumbWidth=thumbWidth;
 	int panelWidth=this->width();
@@ -48,8 +48,24 @@ void PhotoPanel::setModel(BaseList *list,int thumbWidth)
 			{
 				PhotoFrame *pf=new PhotoFrame();
 				QModelIndex idx=list->index(i*labelsPerRow+j,0,QModelIndex());
-				Photo *p=(Photo*)list->get(idx);
-				pf->setPhoto(p,thumbWidth);
+				Photo *p;
+				QString caption;
+
+				if(mode==MODE_PHOTO)
+				{
+					p=(Photo*)list->get(idx);
+					caption=p->getCaption();
+					pf->setPhoto(p,thumbWidth,caption,mode,0);
+				}
+				else
+				{
+					Roll *r=(Roll*)list->get(idx);
+					p=r->getKeyPhoto();
+					caption=r->getRollName();
+					pf->setPhoto(p,thumbWidth,caption,mode,r);
+				}
+
+
 				this->grid->addWidget(pf,i,j);
 				QApplication::processEvents();
 			}

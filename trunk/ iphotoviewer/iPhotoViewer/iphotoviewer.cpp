@@ -6,7 +6,7 @@ iPhotoViewer::iPhotoViewer(QWidget *parent)
 : QMainWindow(parent)
 {
 	ui.setupUi(this);
-	//connect(ui.pushButton, SIGNAL(pressed()), this, SLOT(pushButtonPressed()));
+	connect(ui.pushButton, SIGNAL(pressed()), this, SLOT(pushButtonPressed2()));
 
 	pp=new PhotoPanel(ui.scrollArea);
 	//QVBoxLayout *layout = new QVBoxLayout;
@@ -65,7 +65,7 @@ void iPhotoViewer::lstAlbumSelectionChanged()
 		}
 	}
 
-	pp->setModel(l2,ui.zoomSlider->value()*BASE_SIZE);
+	pp->setModel(l2,ui.zoomSlider->value()*BASE_SIZE,MODE_PHOTO);
 }
 
 void iPhotoViewer::lstRollSelectionChanged()
@@ -90,7 +90,24 @@ void iPhotoViewer::lstRollSelectionChanged()
 		}
 	}
 
-	pp->setModel(l2,ui.zoomSlider->value()*BASE_SIZE);
+	pp->setModel(l2,ui.zoomSlider->value()*BASE_SIZE,MODE_PHOTO);
+}
+
+void iPhotoViewer::pushButtonPressed2()
+{
+	BaseList *l=(BaseList*)ui.lstRolls->model();
+
+	for(int i=0;i<ui.verticalLayout_2->count();i++)
+	{
+		QWidget *w=ui.verticalLayout_2->itemAt(i)->widget();
+		if(w->objectName()=="PhotoViewerClass")
+		{
+			PhotoViewer *pv=(PhotoViewer*)w;
+			pv->goBack();
+		}
+	}
+
+	pp->setModel(l,ui.zoomSlider->value()*BASE_SIZE,MODE_ROLL);
 }
 
 void iPhotoViewer::pushButtonPressed()

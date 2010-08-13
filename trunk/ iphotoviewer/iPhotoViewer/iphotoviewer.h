@@ -29,6 +29,7 @@ private:
 
 public slots:
 	void pushButtonPressed();
+	void pushButtonPressed2();
 	void lstSelectionChanged();
 	void lstAlbumSelectionChanged();
 	void lstRollSelectionChanged();

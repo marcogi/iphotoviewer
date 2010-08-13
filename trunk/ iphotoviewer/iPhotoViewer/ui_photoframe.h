@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'photoframe.ui'
 **
-** Created: Fri Jul 30 21:37:30 2010
+** Created: Sat Jul 31 12:32:34 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -82,7 +82,8 @@ public:
         palette.setBrush(QPalette::Disabled, QPalette::WindowText, brush1);
         caption->setPalette(palette);
         QFont font;
-        font.setFamily(QString::fromUtf8("Arial Black"));
+        font.setFamily(QString::fromUtf8("Andale Mono"));
+        font.setPointSize(8);
         caption->setFont(font);
         caption->setAlignment(Qt::AlignHCenter|Qt::AlignTop);
         photoWidget->raise();
