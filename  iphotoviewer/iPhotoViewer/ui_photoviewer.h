@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'photoviewer.ui'
 **
-** Created: Sat Jul 24 14:29:02 2010
+** Created: Mon Aug 16 22:38:27 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -15,7 +15,6 @@
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
 #include <QtGui/QHeaderView>
-#include <QtGui/QPushButton>
 #include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -23,7 +22,6 @@ QT_BEGIN_NAMESPACE
 class Ui_PhotoViewerClass
 {
 public:
-    QPushButton *goBack;
 
     void setupUi(QWidget *PhotoViewerClass)
     {
@@ -43,10 +41,6 @@ public:
         palette.setBrush(QPalette::Disabled, QPalette::Window, brush1);
         PhotoViewerClass->setPalette(palette);
         PhotoViewerClass->setAutoFillBackground(true);
-        goBack = new QPushButton(PhotoViewerClass);
-        goBack->setObjectName(QString::fromUtf8("goBack"));
-        goBack->setGeometry(QRect(10, 10, 85, 27));
-        goBack->setAutoFillBackground(true);
 
         retranslateUi(PhotoViewerClass);
 
@@ -56,7 +50,6 @@ public:
     void retranslateUi(QWidget *PhotoViewerClass)
     {
         PhotoViewerClass->setWindowTitle(QApplication::translate("PhotoViewerClass", "PhotoViewer", 0, QApplication::UnicodeUTF8));
-        goBack->setText(QApplication::translate("PhotoViewerClass", "Go back", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

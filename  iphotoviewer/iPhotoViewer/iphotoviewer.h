@@ -24,15 +24,13 @@ public:
     ~iPhotoViewer();
 
 private:
-    PhotoPanel *pp;
     Ui::iPhotoViewerClass ui;
-
+    void loadIPhotoDB();
+    PhotoPanel *photoPanel;
+    BaseList *lstRolls;
 public slots:
-	void pushButtonPressed();
-	void pushButtonPressed2();
-	void lstSelectionChanged();
+	void btnRollsPressed();
 	void lstAlbumSelectionChanged();
-	void lstRollSelectionChanged();
 	void sliderValueChanged(int value);
 };
 

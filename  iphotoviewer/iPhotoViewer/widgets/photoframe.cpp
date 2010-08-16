@@ -12,111 +12,123 @@ PhotoFrame::~PhotoFrame()
 
 }
 
-void PhotoFrame::resize(int value)
+/**
+ * resizes a photoframe (e.g. when using the slider to set the thumbnail-size.
+ */
+void PhotoFrame::setSize(int size)
 {
-	this->setGeo(value);
-}
+	int x,y,width,height;
+	width=this->thumb->width();
+	height=this->thumb->height();
 
-void PhotoFrame::setGeo(int width)
-{
-	//qDebug() << "Width " << width;
-	w=wOrig;
-	h=hOrig;
-
-	if(w>h)
+	if(width>height)
 	{
-		h=(h*width)/w;
-		w=width;
+		// scale height and width to size...
+		height=(height*size)/width;
+		width=size;
 		x=0;
-		y=(width-h)/2;
+		y=(size-height)/2;
 	}
 	else
 	{
-		w=(w*width)/h;
-		h=width;
+		width=(width*size)/height;
+		height=size;
 		y=0;
-		x=(width-w)/2;
+		x=(size-width)/2;
 	}
 
-	this->setGeometry(0,0,width,width);
-	this->setFixedHeight(width+20);
-	this->setFixedWidth(width);
+	this->setGeometry(0,0,size,size);
+	this->setFixedHeight(size+LABEL_DIST+LABEL_HEIGHT);
+	this->setFixedWidth(size);
 
-	ui.caption->setGeometry(0,y+h+5,width,15);
-	ui.photoWidget->setGeometry(x,y,w,h);
-	//ui.photoWidget2->setGeometry(x,y,w,h);
-	ui.defaultBorder->setGeometry(x,y,w,h);
-	ui.selectedBorder->setGeometry(x,y,w,h);
+	ui.caption->setGeometry(0,y+height+LABEL_DIST,size,LABEL_HEIGHT);
+	ui.photoWidget->setGeometry(x,y,width,height);
+	ui.defaultBorder->setGeometry(x,y,width,height);
+	ui.selectedBorder->setGeometry(x,y,width,height);
 }
 
-
-void PhotoFrame::setPhoto(Photo *p,int width,QString caption,int mode,Roll *r)
+/**
+ * Sets the photo, size and caption of the current PhotoFrame according
+ * to the given mode.
+ */
+void PhotoFrame::setModel(Photo *model,int size,QString caption,int mode)
 {
-	//this->setGeometry(0,0,width,width);
-	this->p=p;
+	// persist the given parameters
+	this->model=model;
 	this->mode=mode;
-	QPixmap *qp=new QPixmap(p->getThumbPath());
+	this->size=size;
 
-	// in roll mode we want square thumbs...
+	QPixmap *tmpPixmap=new QPixmap(model->getThumbPath());
+
+	// when in roll mode, we want square thumbs...
 	if(mode==MODE_ROLL)
 	{
-		this->r=r;
 		int x,y,w,h;
-		if(qp->width()>qp->height())
+		if(tmpPixmap->width()>tmpPixmap->height())
 		{
 			y=0;
-			w=qp->height();
+			w=tmpPixmap->height();
 			h=w;
-			x=(qp->width()-h)/2;
+			x=(tmpPixmap->width()-h)/2;
 		}
 		else
 		{
 			x=0;
-			w=qp->width();
+			w=tmpPixmap->width();
 			h=w;
-			y=(qp->height()-w)/2;
+			y=(tmpPixmap->height()-w)/2;
 		}
-		qDebug() << x << "-" << y << "-" << w << "-" << h << endl;
-		*qp=qp->copy(x,y,w,h);
+		*tmpPixmap=tmpPixmap->copy(x,y,w,h);
 	}
 
-	this->thumb=qp;
-	this->width=width;
+	// now we also persist the pixmap...
+	this->thumb=tmpPixmap;
 
+	// set the size of this widget...
+	this->setSize(size);
 
-	wOrig=qp->width();
-	hOrig=qp->height();
-
-	this->setGeo(width);
-
-	ui.defaultBorder->setToolTip(p->getCaption());
-	ui.selectedBorder->setToolTip(p->getCaption());
+	ui.defaultBorder->setToolTip(caption);
+	ui.selectedBorder->setToolTip(caption);
 	ui.caption->setText(caption);
 
+	// we hide the borders as the widget originally is not selected...
 	ui.defaultBorder->hide();
 	ui.selectedBorder->hide();
+
 	ui.photoWidget->setStyleSheet(CSS_EDGE);
-
-	//ui.photoWidget->setPixmap(qp->scaled(w,h));
-	//QGraphicsScene *scene=new QGraphicsScene();
-	//scene->addPixmap(*qp);
-
 	ui.photoWidget->setScaledContents(true);
-	ui.photoWidget->setPixmap(*qp);
-
-	//ui.photoWidget2->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
-	//ui.photoWidget2->setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
-	//ui.photoWidget2->setScene(scene);
-
+	ui.photoWidget->setPixmap(*tmpPixmap);
 }
 
-void PhotoFrame::focusInEvent(QFocusEvent *focus)
+/**
+ * Sets a roll as the model for this widget.
+ */
+void PhotoFrame::setRoll(Roll *model,int size)
 {
+	this->roll=model;
+	this->setModel(model->getKeyPhoto(),size,model->getRollName(),MODE_ROLL);
+}
+
+/**
+ * Sets a photo as the model for this widget.
+ */
+void PhotoFrame::setPhoto(Photo *model,int size)
+{
+	this->setModel(model,size,model->getCaption(),MODE_PHOTO);
+}
+
+/**
+ * Invoked when getting the focus. Makes the borders visible and colors
+ * the caption yellow.
+ */
+void PhotoFrame::focusInEvent(QFocusEvent* /*focus*/)
+{
+
 	ui.selectedBorder->show();
 	ui.defaultBorder->show();
+
+	// selected PhotoFrames have round corners.
 	ui.photoWidget->setStyleSheet(CSS_ROUND);
-	//ui.photoWidget->hide();
-	//ui.photoWidget->show();
 
 	QPalette palette;
 	QBrush brush(QColor(255, 255, 0, 255));
@@ -124,18 +136,17 @@ void PhotoFrame::focusInEvent(QFocusEvent *focus)
 	palette.setBrush(QPalette::Active, QPalette::WindowText, brush);
 	palette.setBrush(QPalette::Inactive, QPalette::WindowText, brush);
 	ui.caption->setPalette(palette);
-
-
 }
 
-void PhotoFrame::focusOutEvent(QFocusEvent *focus)
+/**
+ * Invoked when the widget loses focus. Hides the borders and colors
+ * the caption gray.
+ */
+void PhotoFrame::focusOutEvent(QFocusEvent* /*focus*/)
 {
-	//ui.defaultBorder->show();
 	ui.defaultBorder->hide();
 	ui.selectedBorder->hide();
 	ui.photoWidget->setStyleSheet(CSS_EDGE);
-	//ui.photoWidget->hide();
-	//ui.photoWidget->show();
 
 	QPalette palette;
 	QBrush brush(QColor(0xDD, 0xDD, 0xDD, 255));
@@ -145,62 +156,65 @@ void PhotoFrame::focusOutEvent(QFocusEvent *focus)
 	ui.caption->setPalette(palette);
 }
 
-void PhotoFrame::mouseDoubleClickEvent(QMouseEvent *event)
+/**
+ * Invoked when the photoframe is double-clicked. Loads the clicked photo
+ * when in photo mode or loads the selected roll when in roll mode.
+ */
+void PhotoFrame::mouseDoubleClickEvent(QMouseEvent* /*event*/)
 {
-	// viewport -> scrollArea -> Widget
 	if(this->mode==MODE_PHOTO)
 	{
-		QWidget *parent=this->parentWidget()->parentWidget()->parentWidget();
-		QVBoxLayout *qvb=(QVBoxLayout*)parent->parentWidget()->layout();//->addWidget(pv);
 
-		PhotoViewer *pv=new PhotoViewer(parent);
+		QWidget *scrollArea=this->parentWidget()->parentWidget()->parentWidget();
+		QVBoxLayout *contentLayout=(QVBoxLayout*)scrollArea->parentWidget()->layout();
+		PhotoViewer *photoViewer=new PhotoViewer(scrollArea);
 
-		// slider+scrollArea
-		int count=qvb->count();
-		int i=0;
+		int count=contentLayout->count();
 
-		for(i=0;i<count;i++)
+		// hide all widgets in the content layout (slider+photopanel)
+		// and store them in the photo viewer for restore when closing the
+		// the photo viewer widget.
+		for(int i=0;i<count;i++)
 		{
-			QWidget *w1=qvb->itemAt(0)->widget();
-			pv->addRestoreWidget(w1);
-			w1->hide();
-			qvb->removeWidget(w1);
+			QWidget *tmpWidget=contentLayout->itemAt(0)->widget();
+			photoViewer->addRestoreWidget(tmpWidget);
+			tmpWidget->hide();
+			contentLayout->removeWidget(tmpWidget);
 		}
 
-		pv->addRestoreLayout(qvb);
+		// now we add the photo viewer...
+		contentLayout->addWidget(photoViewer);
 
-		qvb->addWidget(pv);
-
-		pv->setPhoto(this->p,this->thumb);
-		pv->show();
+		photoViewer->setPhoto(this->model,this->thumb);
+		photoViewer->show();
 	}
 	else if(this->mode==MODE_ROLL)
 	{
-		QWidget *parent=this->parentWidget();//->parentWidget();
-		qDebug() << this->parentWidget()->objectName() << endl;
+		// if we are in roll mode...we switch the photo frame into photo mode
+		// and load the photos from the roll...
 
-		//QGridLayout *qvb=(QGridLayout*)parent->parentWidget()->layout();
-		//QVBoxLayout *qvb=(QVBoxLayout*)parent->parentWidget()->layout();//->addWidget(pv);
+		PhotoPanel *photoPanel=(PhotoPanel*)this->parentWidget();
+		QGridLayout *gridLayout=(QGridLayout*)photoPanel->layout();
 
-		PhotoPanel *pp=(PhotoPanel*)parent;
-		QGridLayout *qvb=(QGridLayout*)pp->layout();
-		// slider+scrollArea
-		int count=qvb->count();
-		int i=0;
+		// now we remove all rolls from the photo-panel...
+		int count=gridLayout->count();
 
-		for(i=0;i<count;i++)
+		for(int i=0;i<count;i++)
 		{
-			QWidget *w1=qvb->itemAt(0)->widget();
-			//pv->addRestoreWidget(w1);
-			w1->hide();
-			qvb->removeWidget(w1);
+			QWidget *tmpWidget=gridLayout->itemAt(0)->widget();
+			tmpWidget->hide();
+			gridLayout->removeWidget(tmpWidget);
 		}
 
-		//pv->addRestoreLayout(qvb);
-
-		//qvb->addWidget(pp);
-
-		pp->setModel(this->r->getPhotos(),width,MODE_PHOTO);
-		pp->show();
+		photoPanel->setModel(this->roll->getPhotos(),this->size,MODE_PHOTO);
+		photoPanel->show();
 	}
+}
+
+/**
+ * Invoked when the slider is used to resize the roll or photo thumbs.
+ */
+void PhotoFrame::resize(int size)
+{
+	this->setSize(size);
 }

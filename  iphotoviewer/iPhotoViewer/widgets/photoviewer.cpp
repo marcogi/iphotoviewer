@@ -4,19 +4,18 @@ PhotoViewer::PhotoViewer(QWidget *parent)
 : QWidget(parent)
 {
 	ui.setupUi(this);
-	this->firstTime=true;
 
-	this->photo=new ClickLabel("",this);
+	this->lblPhoto=new ClickLabel("",this);
+
+	// set the geometry of the photo viewer...
 	QRect outerGeo=parent->geometry();
 	this->setGeometry(0,0,outerGeo.width(),outerGeo.height());
 
-	//this->photo->setGeometry(10,50,outerGeo.width()-20,outerGeo.height()-60);
-	//this->photo->show();
+	// initialize the restore list...
+	list=new QList<QWidget*>();
 
-	restoreQWidgetList=new QList<QWidget*>();
-
-	connect(this->photo, SIGNAL(clicked()), this, SLOT(goBack()));
-	connect(ui.goBack, SIGNAL(pressed()), this, SLOT(goBack()));
+	// register the click event of the click label...
+	connect(this->lblPhoto, SIGNAL(clicked()), this, SLOT(goBack()));
 }
 
 PhotoViewer::~PhotoViewer()
@@ -24,84 +23,89 @@ PhotoViewer::~PhotoViewer()
 
 }
 
-void PhotoViewer::setPhoto(Photo *p,QPixmap *thumb)
+/**
+ * Set the size of the photo when a resize event occured.
+ */
+void PhotoViewer::setSize()
 {
-	tmp=p;
-	tmpQP=thumb;
+	int maxWidth=this->width()-SIDE_BORDER*2;
+	int maxHeight=this->height()-SIDE_BORDER*2;
 
-	int sideBorder=0;
-	int minTop=50;
-	int maxWidth=this->width()-sideBorder*2;
-	int maxHeight=this->height()-minTop-sideBorder;
-
-	int origWidth=thumb->width();
-	int origHeight=thumb->height();
+	int originalWidth=this->lblPhoto->pixmap()->width();
+	int originalHeight=this->lblPhoto->pixmap()->height();
 
 	int width,height,x,y;
 
-	float factor=(float)maxWidth/(float)origWidth;
-	if((int)(origHeight*factor)>maxHeight)
+	float factor=(float)maxWidth/(float)originalWidth;
+	// now we calc the new dimensions...
+	if((int)(originalHeight*factor)>maxHeight)
 	{
-		factor=(float)maxHeight/(float)origHeight;
-		width=(int)(origWidth*factor);
+		factor=(float)maxHeight/(float)originalHeight;
+		width=(int)(originalWidth*factor);
 		height=maxHeight;
-		x=(maxWidth-width)/2+sideBorder;
-		y=minTop+sideBorder;
+		x=(maxWidth-width)/2+SIDE_BORDER;
+		y=SIDE_BORDER;
 
 	}
 	else
 	{
 		width=maxWidth;
-		height=(int)(origHeight*factor);
-		x=sideBorder;
-		y=(maxHeight-height)/2+minTop+sideBorder;
+		height=(int)(originalHeight*factor);
+		x=SIDE_BORDER;
+		y=(maxHeight-height)/2+SIDE_BORDER;
 	}
 
-	this->photo->setGeometry(x,y,width,height);
-
-	if(firstTime)
-	{
-		this->photo->setScaledContents(true);
-		this->photo->setPixmap(*thumb);
-		this->photo->show();
-		QApplication::processEvents();
-		// set the real image later for performance...
-		QPixmap *qp=new QPixmap(p->getImagePath());
-		this->photo->setPixmap(*qp);
-		firstTime=false;
-	}
+	this->lblPhoto->setGeometry(x,y,width,height);
 }
 
+/**
+ * Set the photo for this photo viewer.
+ */
+void PhotoViewer::setPhoto(Photo *photo,QPixmap *thumbnail)
+{
+	this->lblPhoto->setScaledContents(true);
+	this->lblPhoto->setPixmap(*thumbnail);
+	this->lblPhoto->show();
+	QApplication::processEvents();
+	// now set the real image for performance...
+	QPixmap *pixmap=new QPixmap(photo->getImagePath());
+	this->lblPhoto->setPixmap(*pixmap);
+	// set the size...
+	this->setSize();
+}
+
+/**
+ * Removes the PhotoViewer before restoring the previous items to the layout.
+ */
 void PhotoViewer::goBack()
 {
-	// remove the PhotoViewer from the Layout...
-	this->restoreLayout->removeWidget(this);
+	QLayout *contentLayout=this->parentWidget()->layout();
+	contentLayout->removeWidget(this);
 	this->hide();
 
-	int i;
-	for(i=0;i<this->restoreQWidgetList->count();i++)
+	for(int i=0;i<this->list->count();i++)
 	{
-		QWidget *w1=this->restoreQWidgetList->at(i);
-		w1->show();
-		this->restoreLayout->addWidget(w1);
+		QWidget *widget=this->list->at(i);
+		widget->show();
+		contentLayout->addWidget(widget);
 	}
-
 
 	delete this;
 }
 
-void PhotoViewer::resizeEvent (QResizeEvent *event)
+/**
+ * Resizes the PhotoViewer.
+ */
+void PhotoViewer::resizeEvent (QResizeEvent* /*event*/)
 {
-	//qDebug() << "Xresize";
-	this->setPhoto(this->tmp,this->tmpQP);
+	this->setSize();
 }
 
-void PhotoViewer::addRestoreLayout(QLayout *ql)
+/**
+ * Saves a widget which is going to be restored, when the photoviewer gets
+ * closed.
+ */
+void PhotoViewer::addRestoreWidget(QWidget *restoreWidget)
 {
-	this->restoreLayout=ql;
-}
-
-void PhotoViewer::addRestoreWidget(QWidget *qw)
-{
-	this->restoreQWidgetList->append(qw);
+	this->list->append(restoreWidget);
 }

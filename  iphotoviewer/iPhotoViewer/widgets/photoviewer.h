@@ -9,6 +9,8 @@
 #include "model/Photo.h"
 #include "widgets/ClickLabel.h"
 
+#define SIDE_BORDER 0
+
 class PhotoViewer : public QWidget
 {
     Q_OBJECT
@@ -17,19 +19,16 @@ public:
     PhotoViewer(QWidget *parent = 0);
     ~PhotoViewer();
 
-    void setPhoto(Photo *p,QPixmap *thumb);
-    void addRestoreLayout(QLayout *ql);
-    void addRestoreWidget(QWidget *qw);
+    void setPhoto(Photo *photo,QPixmap *thumbnail);
+    void addRestoreWidget(QWidget *restoreWidget);
 protected:
     void resizeEvent (QResizeEvent *event);
 private:
     Ui::PhotoViewerClass ui;
-    ClickLabel *photo;
-    Photo *tmp;
-    QPixmap *tmpQP;
-    bool firstTime;
-    QList<QWidget*> *restoreQWidgetList;
-    QLayout *restoreLayout;
+    void setSize();
+
+    ClickLabel *lblPhoto;
+    QList<QWidget*> *list;
 public slots:
 	void goBack();
 };

@@ -4,7 +4,6 @@ PhotoPanel::PhotoPanel(QWidget *parent)
 : QWidget(parent)
 {
 	ui.setupUi(this);
-	this->count=0;
 }
 
 PhotoPanel::~PhotoPanel()
@@ -12,20 +11,20 @@ PhotoPanel::~PhotoPanel()
 
 }
 
-void PhotoPanel::resize(int value)
+/**
+ * Sets a list of photos or rolls as the model.
+ */
+void PhotoPanel::setModel(BaseList *list,int size,int mode)
 {
-	this->thumbWidth=value;
-	this->resizeEvent(0);
-}
+	// persist the size of a thumb in the PhotoPanel.
+	this->size=size;
 
-void PhotoPanel::setModel(BaseList *list,int thumbWidth,int mode)
-{
-	this->thumbWidth=thumbWidth;
 	int panelWidth=this->width();
-	int labelsPerRow = floor(panelWidth/(thumbWidth+10));
+	int labelsPerRow = floor((float)(panelWidth-SPACING)/(float)(size+SPACING));
 
 	int rows = ceil((float)list->rowCount() / (float)labelsPerRow);
 
+	// clean up the layout...
 	if(this->layout()!=0)
 	{
 		QLayoutItem *child;
@@ -37,82 +36,82 @@ void PhotoPanel::setModel(BaseList *list,int thumbWidth,int mode)
 		delete this->layout();
 	}
 
-	this->grid=new QGridLayout(this);
-	grid->setSpacing(5);
+	QGridLayout *gridLayout=new QGridLayout(this);
+	gridLayout->setSpacing(SPACING);
 
-	for(int i=0;i<rows;i++)
+	for(int row=0;row<rows;row++)
 	{
-		for(int j=0;j<labelsPerRow;j++)
+		for(int col=0;col<labelsPerRow;col++)
 		{
-			if(i*labelsPerRow+j+1<=list->rowCount())
+			if(row*labelsPerRow+col+1<=list->rowCount())
 			{
-				PhotoFrame *pf=new PhotoFrame();
-				QModelIndex idx=list->index(i*labelsPerRow+j,0,QModelIndex());
-				Photo *p;
-				QString caption;
+				PhotoFrame *photoFrame=new PhotoFrame();
+				QModelIndex index=list->index(row*labelsPerRow+col,0,QModelIndex());
 
 				if(mode==MODE_PHOTO)
 				{
-					p=(Photo*)list->get(idx);
-					caption=p->getCaption();
-					pf->setPhoto(p,thumbWidth,caption,mode,0);
+					Photo *photo=(Photo*)list->get(index);
+					photoFrame->setPhoto(photo,this->size);
 				}
 				else
 				{
-					Roll *r=(Roll*)list->get(idx);
-					p=r->getKeyPhoto();
-					caption=r->getRollName();
-					pf->setPhoto(p,thumbWidth,caption,mode,r);
+					Roll *roll=(Roll*)list->get(index);
+					photoFrame->setRoll(roll,this->size);
 				}
 
-
-				this->grid->addWidget(pf,i,j);
+				gridLayout->addWidget(photoFrame,row,col);
 				QApplication::processEvents();
 			}
 		}
 	}
 }
 
-void PhotoPanel::resizeEvent (QResizeEvent *event)
+/**
+ * Invoked when the main window is being resized. Reorders the contained
+ * PhotoFrames.
+ */
+void PhotoPanel::resizeEvent (QResizeEvent* /*event*/)
 {
-	//event->setAccepted(true);
-	//qDebug() << "Resize event" << this->count++;
 	int panelWidth=this->parentWidget()->parentWidget()->width();
-	int labelsPerRow = floor(panelWidth/(this->thumbWidth+10));
+	int labelsPerRow = floor((float)(panelWidth-SPACING)/(float)(this->size+SPACING));
 
 	if(this->layout()!=0)
 	{
-		//qDebug() << "old: " << this->grid->columnCount() << " new: " << labelsPerRow;
-		//if(this->grid->columnCount()!=labelsPerRow)
+		QLayoutItem *child;
+		QList<QLayoutItem*> list;
+		while ((child=this->layout()->takeAt(0))!=0)
 		{
-			QLayoutItem *child;
-			QList<QLayoutItem*> list;
-			while ((child = this->layout()->takeAt(0)) != 0)
+			list.append(child);
+		}
+		delete this->layout();
+		QGridLayout *gridLayout=new QGridLayout(this);
+		gridLayout->setSpacing(SPACING);
+
+		int rows = ceil((float)list.count()/(float)labelsPerRow);
+
+		// now we resize each photoframe the panel contains and move it to
+		// its new position in the panel...
+		for(int row=0;row<rows;row++)
+		{
+			for(int col=0;col<labelsPerRow;col++)
 			{
-				list.append(child);
-				//delete child->widget();
-				//delete child;
-			}
-			delete this->layout();
-			this->grid=new QGridLayout(this);
-			this->grid->setSpacing(5);
-
-
-			int rows = ceil((float)list.count() / (float)labelsPerRow);
-
-			for(int i=0;i<rows;i++)
-			{
-				for(int j=0;j<labelsPerRow;j++)
+				if(row*labelsPerRow+col+1<=list.count())
 				{
-					if(i*labelsPerRow+j+1<=list.count())
-					{
-						QLayoutItem *item=list.at(i*labelsPerRow+j);
-						PhotoFrame *pf=(PhotoFrame*)item->widget();
-						pf->resize(this->thumbWidth);
-						this->grid->addItem(item,i,j);
-					}
+					QLayoutItem *item=list.at(row*labelsPerRow+col);
+					PhotoFrame *photoFrame=(PhotoFrame*)item->widget();
+					photoFrame->resize(this->size);
+					gridLayout->addItem(item,row,col);
 				}
 			}
 		}
 	}
+}
+
+/**
+ * Invoked when resizing the main window.
+ */
+void PhotoPanel::resize(int size)
+{
+	this->size=size;
+	this->resizeEvent(0);
 }
