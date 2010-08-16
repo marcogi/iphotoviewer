@@ -13,6 +13,8 @@
 #include "model/BaseList.h"
 #include "photoframe.h"
 
+#define SPACING 5
+
 class PhotoPanel : public QWidget
 {
     Q_OBJECT
@@ -21,15 +23,13 @@ public:
     PhotoPanel(QWidget *parent = 0);
     ~PhotoPanel();
 
-    void setModel(BaseList *list,int width,int mode);
-    void resize(int value);
+    void setModel(BaseList *list,int size,int mode);
+    void resize(int size);
 protected:
     void resizeEvent(QResizeEvent *event);
 private:
     Ui::PhotoPanelClass ui;
-    QGridLayout *grid;
-    int thumbWidth;
-    int count;
+    int size;
 };
 
 #endif // PHOTOPANEL_H

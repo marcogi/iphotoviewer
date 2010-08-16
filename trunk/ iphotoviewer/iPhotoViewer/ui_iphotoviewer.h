@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'iphotoviewer.ui'
 **
-** Created: Fri Aug 13 20:48:31 2010
+** Created: Mon Aug 16 23:03:01 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -35,11 +35,10 @@ public:
     QHBoxLayout *horizontalLayout;
     QWidget *widget;
     QVBoxLayout *verticalLayout;
-    QListView *lstRolls;
     QListView *lstAlbums;
-    QPushButton *pushButton;
-    QWidget *widget_2;
-    QVBoxLayout *verticalLayout_2;
+    QPushButton *btnRolls;
+    QWidget *contentWidget;
+    QVBoxLayout *contentLayout;
     QFrame *frame;
     QHBoxLayout *horizontalLayout_2;
     QSlider *zoomSlider;
@@ -74,46 +73,36 @@ public:
         verticalLayout = new QVBoxLayout(widget);
         verticalLayout->setContentsMargins(0, 0, 0, 0);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        lstRolls = new QListView(widget);
-        lstRolls->setObjectName(QString::fromUtf8("lstRolls"));
-        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(10);
-        sizePolicy2.setHeightForWidth(lstRolls->sizePolicy().hasHeightForWidth());
-        lstRolls->setSizePolicy(sizePolicy2);
-
-        verticalLayout->addWidget(lstRolls);
-
         lstAlbums = new QListView(widget);
         lstAlbums->setObjectName(QString::fromUtf8("lstAlbums"));
-        QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(5);
-        sizePolicy3.setHeightForWidth(lstAlbums->sizePolicy().hasHeightForWidth());
-        lstAlbums->setSizePolicy(sizePolicy3);
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(5);
+        sizePolicy2.setHeightForWidth(lstAlbums->sizePolicy().hasHeightForWidth());
+        lstAlbums->setSizePolicy(sizePolicy2);
 
         verticalLayout->addWidget(lstAlbums);
 
-        pushButton = new QPushButton(widget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        btnRolls = new QPushButton(widget);
+        btnRolls->setObjectName(QString::fromUtf8("btnRolls"));
 
-        verticalLayout->addWidget(pushButton);
+        verticalLayout->addWidget(btnRolls);
 
 
         horizontalLayout->addWidget(widget);
 
-        widget_2 = new QWidget(centralwidget);
-        widget_2->setObjectName(QString::fromUtf8("widget_2"));
-        QSizePolicy sizePolicy4(QSizePolicy::Expanding, QSizePolicy::Preferred);
-        sizePolicy4.setHorizontalStretch(0);
-        sizePolicy4.setVerticalStretch(0);
-        sizePolicy4.setHeightForWidth(widget_2->sizePolicy().hasHeightForWidth());
-        widget_2->setSizePolicy(sizePolicy4);
-        verticalLayout_2 = new QVBoxLayout(widget_2);
-        verticalLayout_2->setSpacing(0);
-        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
-        frame = new QFrame(widget_2);
+        contentWidget = new QWidget(centralwidget);
+        contentWidget->setObjectName(QString::fromUtf8("contentWidget"));
+        QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Preferred);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(contentWidget->sizePolicy().hasHeightForWidth());
+        contentWidget->setSizePolicy(sizePolicy3);
+        contentLayout = new QVBoxLayout(contentWidget);
+        contentLayout->setSpacing(0);
+        contentLayout->setContentsMargins(0, 0, 0, 0);
+        contentLayout->setObjectName(QString::fromUtf8("contentLayout"));
+        frame = new QFrame(contentWidget);
         frame->setObjectName(QString::fromUtf8("frame"));
         sizePolicy.setHeightForWidth(frame->sizePolicy().hasHeightForWidth());
         frame->setSizePolicy(sizePolicy);
@@ -131,15 +120,15 @@ public:
         horizontalLayout_2->addWidget(zoomSlider);
 
 
-        verticalLayout_2->addWidget(frame);
+        contentLayout->addWidget(frame);
 
-        scrollArea = new QScrollArea(widget_2);
+        scrollArea = new QScrollArea(contentWidget);
         scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
-        QSizePolicy sizePolicy5(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy5.setHorizontalStretch(0);
-        sizePolicy5.setVerticalStretch(60);
-        sizePolicy5.setHeightForWidth(scrollArea->sizePolicy().hasHeightForWidth());
-        scrollArea->setSizePolicy(sizePolicy5);
+        QSizePolicy sizePolicy4(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(60);
+        sizePolicy4.setHeightForWidth(scrollArea->sizePolicy().hasHeightForWidth());
+        scrollArea->setSizePolicy(sizePolicy4);
         QPalette palette;
         QBrush brush(QColor(85, 85, 85, 255));
         brush.setStyle(Qt::SolidPattern);
@@ -154,10 +143,10 @@ public:
         scrollAreaWidgetContents->setGeometry(QRect(0, 0, 386, 269));
         scrollArea->setWidget(scrollAreaWidgetContents);
 
-        verticalLayout_2->addWidget(scrollArea);
+        contentLayout->addWidget(scrollArea);
 
 
-        horizontalLayout->addWidget(widget_2);
+        horizontalLayout->addWidget(contentWidget);
 
         iPhotoViewerClass->setCentralWidget(centralwidget);
         menubar = new QMenuBar(iPhotoViewerClass);
@@ -173,7 +162,7 @@ public:
     void retranslateUi(QMainWindow *iPhotoViewerClass)
     {
         iPhotoViewerClass->setWindowTitle(QString());
-        pushButton->setText(QApplication::translate("iPhotoViewerClass", "Rolls", 0, QApplication::UnicodeUTF8));
+        btnRolls->setText(QApplication::translate("iPhotoViewerClass", "Rolls", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

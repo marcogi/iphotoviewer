@@ -6,23 +6,20 @@ iPhotoViewer::iPhotoViewer(QWidget *parent)
 : QMainWindow(parent)
 {
 	ui.setupUi(this);
-	connect(ui.pushButton, SIGNAL(pressed()), this, SLOT(pushButtonPressed2()));
-
-	pp=new PhotoPanel(ui.scrollArea);
-	//QVBoxLayout *layout = new QVBoxLayout;
-	//layout->setContentsMargins(0,0,0,0);
-	//layout->addWidget(pp);
-	ui.scrollArea->setWidget(pp);
-	//ui.scrollArea->setLayout(layout);
-
-	ui.zoomSlider->setRange(MIN_SLIDER,MAX_SLIDER);
-	ui.zoomSlider->setValue(75);
-	//ui.zoomSlider->setPageStep(10);
-	ui.zoomSlider->setSingleStep(1);
-
+	// connect the rolls button to the appropriate click event...
+	connect(ui.btnRolls, SIGNAL(pressed()), this, SLOT(btnRollsPressed()));
 	connect(ui.zoomSlider,SIGNAL(valueChanged(int)),this,SLOT(sliderValueChanged(int)));
 
-	pushButtonPressed();
+	// initialize the content area...
+	photoPanel=new PhotoPanel(ui.scrollArea);
+	ui.scrollArea->setWidget(photoPanel);
+	// initialize the zoom-slider...
+	ui.zoomSlider->setRange(MIN_SLIDER,MAX_SLIDER);
+	ui.zoomSlider->setValue(75);
+	ui.zoomSlider->setSingleStep(1);
+
+	// load the iPhoto database...
+	loadIPhotoDB();
 }
 
 iPhotoViewer::~iPhotoViewer()
@@ -32,85 +29,45 @@ iPhotoViewer::~iPhotoViewer()
 
 void iPhotoViewer::sliderValueChanged(int value)
 {
-	//qDebug() << "Slider value " << value << " width " << value*BASE_SIZE;
-	pp->resize(value*BASE_SIZE);
-}
-
-void iPhotoViewer::lstSelectionChanged()
-{
-	//BaseList *l=(BaseList*)ui.lstPhotosInAlbum->model();
-	//Photo *p=(Photo*)l->get(ui.lstPhotosInAlbum->currentIndex());
-	//ui.label->setPixmap(QPixmap(p->getThumbPath()));
+	photoPanel->resize(value*BASE_SIZE);
 }
 
 void iPhotoViewer::lstAlbumSelectionChanged()
 {
-	BaseList *l=(BaseList*)ui.lstAlbums->model();
-	Album *a=(Album*)l->get(ui.lstAlbums->currentIndex());
-	BaseList *l2=a->getList();
-	//cout << "Rows: " << l2->rowCount() << endl;
+	BaseList *albumList=(BaseList*)ui.lstAlbums->model();
+	Album *album=(Album*)albumList->get(ui.lstAlbums->currentIndex());
+	BaseList *list=album->getList();
 
-	//ui.lstPhotosInAlbum->setModel(l2);
-	//cout << "Changed Model" << endl;
-	//connect(ui.lstPhotosInAlbum->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstSelectionChanged()));
-	//ui.label->setPixmap(QPixmap(p->getThumbPath()));
-
-	for(int i=0;i<ui.verticalLayout_2->count();i++)
+	for(int i=0;i<ui.contentLayout->count();i++)
 	{
-		QWidget *w=ui.verticalLayout_2->itemAt(i)->widget();
-		if(w->objectName()=="PhotoViewerClass")
+		QWidget *widget=ui.contentLayout->itemAt(i)->widget();
+		if(widget->objectName()=="PhotoViewerClass")
 		{
-			PhotoViewer *pv=(PhotoViewer*)w;
-			pv->goBack();
+			PhotoViewer *photoViewer=(PhotoViewer*)widget;
+			photoViewer->goBack();
 		}
 	}
 
-	pp->setModel(l2,ui.zoomSlider->value()*BASE_SIZE,MODE_PHOTO);
+	photoPanel->setModel(list,ui.zoomSlider->value()*BASE_SIZE,MODE_PHOTO);
 }
 
-void iPhotoViewer::lstRollSelectionChanged()
+void iPhotoViewer::btnRollsPressed()
 {
-	BaseList *l=(BaseList*)ui.lstRolls->model();
-	Roll *r=(Roll*)l->get(ui.lstRolls->currentIndex());
-	BaseList *l2=r->getPhotos();
-	//cout << "Rows: " << l2->rowCount() << endl;
-
-	//ui.lstPhotosInAlbum->setModel(l2);
-	//cout << "Changed Model" << endl;
-	//connect(ui.lstPhotosInAlbum->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstSelectionChanged()));
-	//ui.label->setPixmap(QPixmap(p->getThumbPath()));
-
-	for(int i=0;i<ui.verticalLayout_2->count();i++)
+	for(int i=0;i<ui.contentLayout->count();i++)
 	{
-		QWidget *w=ui.verticalLayout_2->itemAt(i)->widget();
-		if(w->objectName()=="PhotoViewerClass")
+		// we close all photoViewers...
+		QWidget *widget=ui.contentLayout->itemAt(i)->widget();
+		if(widget->objectName()=="PhotoViewerClass")
 		{
-			PhotoViewer *pv=(PhotoViewer*)w;
-			pv->goBack();
+			PhotoViewer *photoViewer=(PhotoViewer*)widget;
+			photoViewer->goBack();
 		}
 	}
 
-	pp->setModel(l2,ui.zoomSlider->value()*BASE_SIZE,MODE_PHOTO);
+	photoPanel->setModel(this->lstRolls,ui.zoomSlider->value()*BASE_SIZE,MODE_ROLL);
 }
 
-void iPhotoViewer::pushButtonPressed2()
-{
-	BaseList *l=(BaseList*)ui.lstRolls->model();
-
-	for(int i=0;i<ui.verticalLayout_2->count();i++)
-	{
-		QWidget *w=ui.verticalLayout_2->itemAt(i)->widget();
-		if(w->objectName()=="PhotoViewerClass")
-		{
-			PhotoViewer *pv=(PhotoViewer*)w;
-			pv->goBack();
-		}
-	}
-
-	pp->setModel(l,ui.zoomSlider->value()*BASE_SIZE,MODE_ROLL);
-}
-
-void iPhotoViewer::pushButtonPressed()
+void iPhotoViewer::loadIPhotoDB()
 {
 	//ui.lstPhotos->addItem("Item");
 	//IPhotoPhotos *ipp=new IPhotoPhotos();
@@ -414,12 +371,8 @@ void iPhotoViewer::pushButtonPressed()
 		}
 	}
 
-	//ui.lstPhotos->setModel(listOfPhotos);
-	//connect(ui.lstPhotos->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstSelectionChanged()));
 	ui.lstAlbums->setModel(listOfAlbums);
-	ui.lstRolls->setModel(listOfRolls);
+	this->lstRolls=listOfRolls;
 	connect(ui.lstAlbums->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstAlbumSelectionChanged()));
-	connect(ui.lstRolls->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(lstRollSelectionChanged()));
-
 }
 
