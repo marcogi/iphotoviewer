@@ -4,6 +4,7 @@ PhotoPanel::PhotoPanel(QWidget *parent)
 : QWidget(parent)
 {
 	ui.setupUi(this);
+	this->isLoading=false;
 }
 
 PhotoPanel::~PhotoPanel()
@@ -11,11 +12,36 @@ PhotoPanel::~PhotoPanel()
 
 }
 
+void PhotoPanel::onLoadingCompleted()
+{
+	disconnect(this,SIGNAL(loadingCompleted()),this,SLOT(onLoadingCompleted()));
+	this->setModel(this->list,this->size,this->mode);
+}
+
 /**
  * Sets a list of photos or rolls as the model.
  */
 void PhotoPanel::setModel(BaseList *list,int size,int mode)
 {
+	this->mutex.lock();
+	// if the panel is already loading another view...
+	if(this->isLoading)
+	{
+		// we request a cancelation...
+		this->cancel=true;
+		// persist the parameters...
+		this->list=list;
+		this->size=size;
+		this->mode=mode;
+		// and wait for the loadingCompleted signal, emited, when
+		// the cancelation took place...
+		connect(this,SIGNAL(loadingCompleted()),this,SLOT(onLoadingCompleted()));
+		this->mutex.unlock();
+		return;
+	}
+	this->mutex.unlock();
+
+	this->isLoading=true;
 	// persist the size of a thumb in the PhotoPanel.
 	this->size=size;
 
@@ -45,6 +71,10 @@ void PhotoPanel::setModel(BaseList *list,int size,int mode)
 		{
 			if(row*labelsPerRow+col+1<=list->rowCount())
 			{
+				// if a cancelation was requested we stop here...
+				if(this->cancel)
+					break;
+
 				PhotoFrame *photoFrame=new PhotoFrame();
 				QModelIndex index=list->index(row*labelsPerRow+col,0,QModelIndex());
 
@@ -64,6 +94,10 @@ void PhotoPanel::setModel(BaseList *list,int size,int mode)
 			}
 		}
 	}
+
+	this->cancel=false;
+	this->isLoading=false;
+	emit loadingCompleted();
 }
 
 /**

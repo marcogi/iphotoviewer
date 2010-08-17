@@ -24,10 +24,13 @@ public:
 	void setKeyPhoto(Photo* keyPhoto);
 	Photo* getKeyPhoto();
 	QString getDisplayString();
+	void setKeyThumb(QPixmap *keyThumb);
+	QPixmap* getKeyThumb();
 private:
 	QString rollName;
 	BaseList *photos;
 	Photo *keyPhoto;
+	QPixmap *keyThumb;
 };
 
 #endif /* ROLL_H_ */

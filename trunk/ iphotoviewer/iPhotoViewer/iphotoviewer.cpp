@@ -63,7 +63,6 @@ void iPhotoViewer::btnRollsPressed()
 			photoViewer->goBack();
 		}
 	}
-
 	photoPanel->setModel(this->lstRolls,ui.zoomSlider->value()*BASE_SIZE,MODE_ROLL);
 }
 

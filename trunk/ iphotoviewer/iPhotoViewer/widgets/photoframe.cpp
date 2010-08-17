@@ -58,11 +58,13 @@ void PhotoFrame::setModel(Photo *model,int size,QString caption,int mode)
 	this->mode=mode;
 	this->size=size;
 
-	QPixmap *tmpPixmap=new QPixmap(model->getThumbPath());
+	QPixmap *tmpPixmap;
 
 	// when in roll mode, we want square thumbs...
 	if(mode==MODE_ROLL)
 	{
+		// in roll mode we get the pre-loaded thumb from the roll...
+		tmpPixmap=this->roll->getKeyThumb();
 		int x,y,w,h;
 		if(tmpPixmap->width()>tmpPixmap->height())
 		{
@@ -79,6 +81,10 @@ void PhotoFrame::setModel(Photo *model,int size,QString caption,int mode)
 			y=(tmpPixmap->height()-w)/2;
 		}
 		*tmpPixmap=tmpPixmap->copy(x,y,w,h);
+	}
+	else if(mode==MODE_PHOTO)
+	{
+		tmpPixmap=new QPixmap(model->getThumbPath());
 	}
 
 	// now we also persist the pixmap...
@@ -106,6 +112,11 @@ void PhotoFrame::setModel(Photo *model,int size,QString caption,int mode)
 void PhotoFrame::setRoll(Roll *model,int size)
 {
 	this->roll=model;
+
+	// we store the thumb Pixmap for later reuse
+	if(this->roll->getKeyThumb()==0)
+		this->roll->setKeyThumb(new QPixmap(model->getKeyPhoto()->getThumbPath()));
+
 	this->setModel(model->getKeyPhoto(),size,model->getRollName(),MODE_ROLL);
 }
 
