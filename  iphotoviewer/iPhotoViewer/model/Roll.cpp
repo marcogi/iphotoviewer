@@ -11,6 +11,7 @@ Roll::Roll() {
 	// TODO Auto-generated constructor stub
 	this->rollName="";
 	this->photos=new BaseList();
+	this->keyThumb=0;
 }
 
 Roll::~Roll() {
@@ -50,4 +51,14 @@ Photo* Roll::getKeyPhoto()
 QString Roll::getDisplayString()
 {
 	return this->getRollName();
+}
+
+void Roll::setKeyThumb(QPixmap *keyThumb)
+{
+	this->keyThumb=keyThumb;
+}
+
+QPixmap* Roll::getKeyThumb()
+{
+	return this->keyThumb;
 }
