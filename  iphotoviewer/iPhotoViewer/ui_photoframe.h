@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'photoframe.ui'
 **
-** Created: Sat Jul 31 12:32:34 2010
+** Created: Wed Aug 18 00:01:12 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

@@ -176,7 +176,7 @@ void PhotoFrame::mouseDoubleClickEvent(QMouseEvent* /*event*/)
 	if(this->mode==MODE_PHOTO)
 	{
 
-		QWidget *scrollArea=this->parentWidget()->parentWidget()->parentWidget();
+		QWidget *scrollArea=this->parentWidget()->parentWidget()->parentWidget()->parentWidget();
 		QVBoxLayout *contentLayout=(QVBoxLayout*)scrollArea->parentWidget()->layout();
 		PhotoViewer *photoViewer=new PhotoViewer(scrollArea);
 
@@ -203,9 +203,9 @@ void PhotoFrame::mouseDoubleClickEvent(QMouseEvent* /*event*/)
 	{
 		// if we are in roll mode...we switch the photo frame into photo mode
 		// and load the photos from the roll...
-
-		PhotoPanel *photoPanel=(PhotoPanel*)this->parentWidget();
-		QGridLayout *gridLayout=(QGridLayout*)photoPanel->layout();
+		QWidget *contentWidget=(QWidget*)this->parentWidget();
+		PhotoPanel *photoPanel=(PhotoPanel*)contentWidget->parentWidget();
+		QGridLayout *gridLayout=(QGridLayout*)contentWidget->layout();
 
 		// now we remove all rolls from the photo-panel...
 		int count=gridLayout->count();
@@ -218,7 +218,6 @@ void PhotoFrame::mouseDoubleClickEvent(QMouseEvent* /*event*/)
 		}
 
 		photoPanel->setModel(this->roll->getPhotos(),this->size,MODE_PHOTO);
-		photoPanel->show();
 	}
 }
 

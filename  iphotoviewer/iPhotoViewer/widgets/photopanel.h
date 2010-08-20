@@ -13,6 +13,7 @@
 #include "ui_photopanel.h"
 #include "model/BaseList.h"
 #include "photoframe.h"
+#include "navigationbar.h"
 
 #define SPACING 5
 
@@ -40,6 +41,7 @@ private:
     BaseList *list;
     QMutex mutex;
     bool isLoading,cancel;
+    NavigationBar *navBar;
 };
 
 #endif // PHOTOPANEL_H
