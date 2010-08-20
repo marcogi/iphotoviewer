@@ -13,6 +13,7 @@ iPhotoViewer::iPhotoViewer(QWidget *parent)
 	// initialize the content area...
 	photoPanel=new PhotoPanel(ui.scrollArea);
 	ui.scrollArea->setWidget(photoPanel);
+
 	// initialize the zoom-slider...
 	ui.zoomSlider->setRange(MIN_SLIDER,MAX_SLIDER);
 	ui.zoomSlider->setValue(75);

@@ -5,6 +5,12 @@ PhotoPanel::PhotoPanel(QWidget *parent)
 {
 	ui.setupUi(this);
 	this->isLoading=false;
+	this->cancel=false;
+	this->navBar=new NavigationBar();
+	QVBoxLayout *vLayout = new QVBoxLayout(ui.navigationWidget);
+	vLayout->setMargin(0);
+	vLayout->addWidget(this->navBar);
+	this->navBar->show();
 }
 
 PhotoPanel::~PhotoPanel()
@@ -51,18 +57,31 @@ void PhotoPanel::setModel(BaseList *list,int size,int mode)
 	int rows = ceil((float)list->rowCount() / (float)labelsPerRow);
 
 	// clean up the layout...
-	if(this->layout()!=0)
+	if(ui.contentWidget->layout()!=0)
 	{
 		QLayoutItem *child;
-		while ((child = this->layout()->takeAt(0)) != 0)
+		while ((child = ui.contentWidget->layout()->takeAt(0)) != 0)
 		{
 			delete child->widget();
 			delete child;
 		}
-		delete this->layout();
+		delete ui.contentWidget->layout();
 	}
 
-	QGridLayout *gridLayout=new QGridLayout(this);
+	if(mode==MODE_ROLL)
+	{
+		ui.navigationWidget->setMinimumHeight(0);
+		ui.navigationWidget->setMaximumHeight(0);
+	}
+	else if(mode==MODE_PHOTO)
+	{
+		ui.navigationWidget->setMinimumHeight(27);
+		ui.navigationWidget->setMaximumHeight(27);
+	}
+
+	QGridLayout *gridLayout=new QGridLayout();
+	ui.contentWidget->setLayout(gridLayout);
+	gridLayout->setObjectName("contentGridLayout");
 	gridLayout->setSpacing(SPACING);
 
 	for(int row=0;row<rows;row++)
@@ -109,16 +128,16 @@ void PhotoPanel::resizeEvent (QResizeEvent* /*event*/)
 	int panelWidth=this->parentWidget()->parentWidget()->width();
 	int labelsPerRow = floor((float)(panelWidth-SPACING)/(float)(this->size+SPACING));
 
-	if(this->layout()!=0)
+	if(ui.contentWidget->layout()!=0)
 	{
 		QLayoutItem *child;
 		QList<QLayoutItem*> list;
-		while ((child=this->layout()->takeAt(0))!=0)
+		while ((child=ui.contentWidget->layout()->takeAt(0))!=0)
 		{
 			list.append(child);
 		}
-		delete this->layout();
-		QGridLayout *gridLayout=new QGridLayout(this);
+		delete ui.contentWidget->layout();
+		QGridLayout *gridLayout=new QGridLayout(ui.contentWidget);
 		gridLayout->setSpacing(SPACING);
 
 		int rows = ceil((float)list.count()/(float)labelsPerRow);

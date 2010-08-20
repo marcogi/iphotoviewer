@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'navigationbar.ui'
 **
-** Created: Tue Aug 17 21:50:42 2010
+** Created: Fri Aug 20 22:40:59 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -16,6 +16,7 @@
 #include <QtGui/QButtonGroup>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
+#include <QtGui/QLabel>
 #include <QtGui/QPushButton>
 #include <QtGui/QSpacerItem>
 #include <QtGui/QWidget>
@@ -27,6 +28,7 @@ class Ui_NavigationBarClass
 public:
     QHBoxLayout *horizontalLayout;
     QPushButton *btnRolls;
+    QLabel *lblCaption;
     QSpacerItem *horizontalSpacer;
     QPushButton *btnPreviousRoll;
     QPushButton *btnNextRoll;
@@ -46,6 +48,11 @@ public:
         btnRolls->setMaximumSize(QSize(85, 16777215));
 
         horizontalLayout->addWidget(btnRolls);
+
+        lblCaption = new QLabel(NavigationBarClass);
+        lblCaption->setObjectName(QString::fromUtf8("lblCaption"));
+
+        horizontalLayout->addWidget(lblCaption);
 
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -74,6 +81,7 @@ public:
     {
         NavigationBarClass->setWindowTitle(QApplication::translate("NavigationBarClass", "NavigationBar", 0, QApplication::UnicodeUTF8));
         btnRolls->setText(QApplication::translate("NavigationBarClass", "Rolls", 0, QApplication::UnicodeUTF8));
+        lblCaption->setText(QApplication::translate("NavigationBarClass", "TextLabel", 0, QApplication::UnicodeUTF8));
         btnPreviousRoll->setText(QApplication::translate("NavigationBarClass", "<<", 0, QApplication::UnicodeUTF8));
         btnNextRoll->setText(QApplication::translate("NavigationBarClass", ">>", 0, QApplication::UnicodeUTF8));
     } // retranslateUi

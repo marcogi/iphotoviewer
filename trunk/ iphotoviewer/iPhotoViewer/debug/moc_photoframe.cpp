@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'photoframe.h'
 **
-** Created: Tue Aug 17 23:01:00 2010
+** Created: Wed Aug 18 20:08:41 2010
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!

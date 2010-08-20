@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'navigationbar.h'
 **
-** Created: Tue Aug 17 21:50:56 2010
+** Created: Fri Aug 20 22:51:27 2010
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,18 +23,24 @@ static const uint qt_meta_data_NavigationBar[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
 
+ // slots: signature, parameters, type, tag, flags
+      15,   14,   14,   14, 0x0a,
+      33,   14,   14,   14, 0x0a,
+      51,   14,   14,   14, 0x0a,
+
        0        // eod
 };
 
 static const char qt_meta_stringdata_NavigationBar[] = {
-    "NavigationBar\0"
+    "NavigationBar\0\0btnRollsPressed()\0"
+    "btnPreviousRoll()\0btnNextRoll()\0"
 };
 
 const QMetaObject NavigationBar::staticMetaObject = {
@@ -64,6 +70,15 @@ int NavigationBar::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     _id = QWidget::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        switch (_id) {
+        case 0: btnRollsPressed(); break;
+        case 1: btnPreviousRoll(); break;
+        case 2: btnNextRoll(); break;
+        default: ;
+        }
+        _id -= 3;
+    }
     return _id;
 }
 QT_END_MOC_NAMESPACE
